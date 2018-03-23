@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -10,11 +12,14 @@ def SearchFlight(request):
     if request.method == 'POST':
         startcity = request.POST['startcity']
         arrivecity = request.POST['arrivecity']
-        startdate = request.POST['startdate']
-        enddate = request.POST['enddate']
+        startdate_info = request.POST['startdate']
+        enddate_info = request.POST['enddate']
         price_info = request.POST['price']
 
-        result = get_ticket_information('2018.03.31', '2018.04.24', 'SEL', 'PUS')
+        stardate = datetime.strptime(startdate_info, '%Y.%m.%d')
+        enddate = datetime.strptime(enddate_info, '%Y.%m.%d')
+
+        result = get_ticket_information(startdate_info, enddate_info, 'SEL', 'ROM')
 
         start = result[0]
         arrive = result[1]
