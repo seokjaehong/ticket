@@ -35,13 +35,9 @@
 </form>
 
 
-<form action="{%url 'add-flight' %}" method="post">
-    <input type='hidden' name="info" value="{{ info }}">
-    <span>출발시간: {{ start_time }}</span>
-    <span>도착시간: {{ arrive_time }}</span>
-    <span>총 가격: {{ price }}</span>
-    <button type="submit">일정추가하기</button>
-</form>
+<span>출발시간: {{ start_time }}</span>
+<span>도착시간: {{ arrive_time }}</span>
+<span>총 가격: {{ price }}</span>
 
 
 </body>
