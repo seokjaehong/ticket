@@ -18,4 +18,7 @@ def SearchFlight(request):
 
 
 
+
+
+
     return render(request, 'index.html')
