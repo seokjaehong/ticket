@@ -1,10 +1,6 @@
 from re import sub
 
-import requests
-from bs4 import BeautifulSoup
-from decimal import Decimal
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 
 
 def get_url(startdate, enddate, startcity, endcity):

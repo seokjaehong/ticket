@@ -9,7 +9,6 @@
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <body>
-<<<<<<< HEAD
  <h1> 여행계획을 입력해주세요.</h1>
  <form action="" method="post">
      {% csrf_token %}
@@ -22,7 +21,6 @@
  </form>
 {{ result }}
 
-=======
 <script>
     $(function () {
         $('#select-start-city').change(function () {
@@ -37,43 +35,25 @@
 <h1> 여행계획을 입력해주세요.</h1>
 <form action="" method="post">
     {% csrf_token %}
-    <input type="text" name="startdate" placeholder="출발일(YYYY.MM.DD)">
-    <input type="text" name="enddate" placeholder="도착일(YYYY.MM.DD)">
-    <!--<input type="text" name="startcity" placeholder="출발도시">-->
-
+    출발도시
     <select name="select-start-city">
     {% for item in items %}
-        <option value="{{ item.id }}">{{ item.name }}</option>
+       {{ item.id }}
+        <option value="{{ item.cityname }}" name="startcity">{{ item.cityname }}</option>
     {% endfor %}
     </select>
 
-
-    <!--<div>-->
-        <!--출발도시-->
-        <!--<input type="text">-->
-        <!--<select id="select-start-city">-->
-            <!--<option value=ICN>인천</option>-->
-            <!--<option value=ROM>로마</option>-->
-            <!--<option value=GIM>김포</option>-->
-            <!--<option value=PUS>부산</option>-->
-            <!--<option value=FLR>피렌체</option>-->
-        <!--</select>-->
-
-        <!--도착도시-->
-        <!--<select id="select-arrival-city">-->
-            <!--<option value=ICN>인천</option>-->
-            <!--<option value=ROM>로마</option>-->
-            <!--<option value=GIM>김포</option>-->
-            <!--<option value=PUS>부산</option>-->
-            <!--<option value=FLR>피렌체</option>-->
-        <!--</select>-->
-    <!--</div>-->
+    도착도시
+    <select name="select-end-city">
+    {% for item in items %}
+       {{ item.id }}
+        <option value="{{ item.cityname }}" name="arrivecity">{{ item.cityname}}</option>
+    {% endfor %}
+    </select>
     <input type="text" name="price" placeholder="원하는금액">
     <button type="submit"> 저장하기 </button>
 
 
 </form>
->>>>>>> 9b4ea2b55c1061c3e21205cfe71b81e28fadd457
-
 </body>
 </html>
