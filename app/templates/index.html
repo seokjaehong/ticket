@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+ <h1> 여행계획을 입력해주세요.</h1>
+ <form action="" method="post">
+     {% csrf_token %}
+     <input type="text" name="startdate" placeholder="출발일(YYYY.MM.DD)">
+     <input type="text" name="enddate" placeholder="도착일(YYYY.MM.DD)">
+     <input type="text" name="startcity" placeholder="출발도시">
+     <input type="text" name="arrivecity" placeholder="도착도시">
+     <input type="text" name="money" placeholder="원하는금액">
+     <button type="submit"> 검색하기 </button>
+ </form>
+
+</body>
+</html>
