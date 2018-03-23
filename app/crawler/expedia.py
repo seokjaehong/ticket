@@ -20,17 +20,24 @@ def get_url(startdate, enddate, startcity, endcity):
     return url
 
 
-def get_ticket_information():
-    result = list()
+def get_ticket_information(start_date, arrive_date, start, arrive):
+    driver = webdriver.Chrome('chromedriver')
+    driver.implicitly_wait(3)
+    url = get_url(start_date, arrive_date, start, arrive)
+    driver.get(url)
 
     def get_time_price_from_home_page():
+        result = dict()
         time_info = flight_infomation.find_element_by_class_name('flight-module').find_element_by_class_name(
             'primary-content').text
         price_raw = flight_infomation.find_element_by_class_name('grid-container').find_element_by_class_name(
             'all-col-shrink').find_element_by_class_name('primary-content')
 
         price_info = int(sub(r'[^\d.]', '', price_raw.text))
-        result.append({'time': time_info, 'price': price_info})
+
+        result['time'] = time_info
+        result['price'] = price_info
+
         return result
 
     flight_infomation = driver.find_element_by_id('flight-listing-container')
@@ -43,14 +50,13 @@ def get_ticket_information():
 
     arrival_info = get_time_price_from_home_page()
 
+    result = list()
+    result.append({'출발': departure_info})
+    result.append({'도착': arrival_info})
+
+    driver.close();
     return result
 
 
-driver = webdriver.Chrome('chromedriver')
-driver.implicitly_wait(3)
+result = [{'출발': {'time': '15:40 - 16:35', 'price': 70600}}, {'도착': {'time': '08:10 - 09:05', 'price': 0}}]
 
-url = get_url('2018.03.31', '2018.04.24', 'SEL', 'PUS')
-driver.get(url)
-
-result = get_ticket_information()
-print(result)

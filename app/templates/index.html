@@ -9,6 +9,20 @@
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <body>
+<<<<<<< HEAD
+ <h1> 여행계획을 입력해주세요.</h1>
+ <form action="" method="post">
+     {% csrf_token %}
+     <input type="text" name="startdate" placeholder="출발일(YYYY.MM.DD)">
+     <input type="text" name="enddate" placeholder="도착일(YYYY.MM.DD)">
+     <input type="text" name="startcity" placeholder="출발도시">
+     <input type="text" name="arrivecity" placeholder="도착도시">
+     <input type="text" name="price" placeholder="원하는금액">
+     <button type="submit"> 검색하기 </button>
+ </form>
+{{ result }}
+
+=======
 <script>
     $(function () {
         $('#select-start-city').change(function () {
@@ -59,6 +73,7 @@
 
 
 </form>
+>>>>>>> 9b4ea2b55c1061c3e21205cfe71b81e28fadd457
 
 </body>
 </html>
