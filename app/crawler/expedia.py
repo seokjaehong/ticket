@@ -1,6 +1,5 @@
 from re import sub
 
-
 from selenium import webdriver
 
 
@@ -12,14 +11,18 @@ def get_url(startdate, enddate, startcity, endcity):
                                   "&trip=roundtrip" \
                                   "&leg1=from%3A%EC%84%9C%EC%9A%B8%2C+%ED%95%9C%EA%B5%AD+%28" \
           + startcity + "-%EB%AA%A8%EB%93%A0+%EA%B3%B5%ED%95%AD%29%2Cto%3A%EB%B6%80%EC%82%B0%2C+%ED%95%9C%EA%B5%AD+%28" \
-          + endcity + "-%EA%B9%80%ED%95%B4%EA%B5%AD%EC%A0%9C%EA%B3%B5%ED%95%AD%29%2Cdeparture%3A2018.03.31TANYT&leg2=from%3A%EB%B6%80%EC%82%B0%2C+%ED%95%9C%EA%B5%AD+%28PUS-%EA%B9%80%ED%95%B4%EA%B5%AD%EC%A0%9C%EA%B3%B5%ED%95%AD%29%2Cto%3A%EC%84%9C%EC%9A%B8%2C+%ED%95%9C%EA%B5%AD+%28SEL-%EB%AA%A8%EB%93%A0+%EA%B3%B5%ED%95%AD%29%2Cdeparture%3A2018.04.24TANYT&passengers=children%3A0%2Cadults%3A1%2Cseniors%3A0%2Cinfantinlap%3AY"
+          + endcity + "-%EA%B9%80%ED%95%B4%EA%B5%AD%EC%A0%9C%EA%B3%B5%ED%95%AD%29%2Cdeparture%3A" \
+          + startdate + "TANYT&leg2=from%3A%EB%B6%80%EC%82%B0%2C+%ED%95%9C%EA%B5%AD+%28" \
+          + startcity + "-%EA%B9%80%ED%95%B4%EA%B5%AD%EC%A0%9C%EA%B3%B5%ED%95%AD%29%2Cto%3A%EC%84%9C%EC%9A%B8%2C+%ED%95%9C%EA%B5%AD+%28" \
+          + endcity + "-%EB%AA%A8%EB%93%A0+%EA%B3%B5%ED%95%AD%29%2Cdeparture%3A" \
+          + enddate + "TANYT&passengers=children%3A0%2Cadults%3A1%2Cseniors%3A0%2Cinfantinlap%3AY"
 
     return url
 
 
 def get_ticket_information(start_date, arrive_date, start, arrive):
     driver = webdriver.Chrome('chromedriver')
-    driver.implicitly_wait(3)
+    driver.implicitly_wait(4)
     url = get_url(start_date, arrive_date, start, arrive)
     driver.get(url)
     print(url)
@@ -55,6 +58,3 @@ def get_ticket_information(start_date, arrive_date, start, arrive):
 
     # driver.close();
     return result
-
-
-
