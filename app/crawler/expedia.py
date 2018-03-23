@@ -37,6 +37,7 @@ def get_ticket_information(start_date, arrive_date, start, arrive):
 
         result['time'] = time_info
         result['price'] = price_info
+
         return result
 
     flight_infomation = driver.find_element_by_id('flight-listing-container')
@@ -52,6 +53,8 @@ def get_ticket_information(start_date, arrive_date, start, arrive):
     result = list()
     result.append({'출발': departure_info})
     result.append({'도착': arrival_info})
+
+    driver.close();
     return result
 
 
