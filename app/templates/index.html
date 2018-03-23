@@ -22,7 +22,6 @@
         <option value="{{ item.id }}" name="optionstartcity">{{ item.cityname }}</option>
         {% endfor %}
     </select>
-
     도착도시
     <select name="arrivecity">
         {% csrf_token %}
@@ -34,7 +33,16 @@
     <input type="text" name="price" placeholder="원하는금액">
     <button type="submit"> 검색하기</button>
 </form>
-{{ result }}
+
+
+<form action="{%url 'add-flight' %}" method="post">
+    <input type='hidden' name="info" value="{{ info }}">
+    <span>출발시간: {{ start_time }}</span>
+    <span>도착시간: {{ arrive_time }}</span>
+    <span>총 가격: {{ price }}</span>
+    <button type="submit">일정추가하기</button>
+</form>
+
 
 </body>
 </html>
