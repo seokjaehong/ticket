@@ -1,5 +1,6 @@
 from re import sub
 
+
 from selenium import webdriver
 
 
@@ -21,11 +22,13 @@ def get_ticket_information(start_date, arrive_date, start, arrive):
     driver.implicitly_wait(3)
     url = get_url(start_date, arrive_date, start, arrive)
     driver.get(url)
+    print(url)
 
     def get_time_price_from_home_page():
         result = dict()
-        time_info = flight_infomation.find_element_by_class_name('flight-module').find_element_by_class_name(
+        time_info_text = flight_infomation.find_element_by_class_name('flight-module').find_element_by_class_name(
             'primary-content').text
+        time_info = time_info_text.split('\n')[0]
         price_raw = flight_infomation.find_element_by_class_name('grid-container').find_element_by_class_name(
             'all-col-shrink').find_element_by_class_name('primary-content')
 
@@ -50,9 +53,8 @@ def get_ticket_information(start_date, arrive_date, start, arrive):
     result.append({'출발': departure_info})
     result.append({'도착': arrival_info})
 
-    driver.close();
+    # driver.close();
     return result
 
 
-result = [{'출발': {'time': '15:40 - 16:35', 'price': 70600}}, {'도착': {'time': '08:10 - 09:05', 'price': 0}}]
 
