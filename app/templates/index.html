@@ -19,7 +19,7 @@
         {% csrf_token %}
         {% for item in items %}
         {{ item.id }}
-        <option value="{{ item.cityname }}" name="optionstartcity">{{ item.cityname }}</option>
+        <option value="{{ item.id }}" name="optionstartcity">{{ item.cityname }}</option>
         {% endfor %}
     </select>
 
@@ -28,7 +28,7 @@
         {% csrf_token %}
         {% for item in items %}
         {{ item.id }}
-        <option value="{{ item.cityname }}" name="optionarrivecity">{{ item.cityname }}</option>
+        <option value="{{ item.id}}" name="optionarrivecity">{{ item.cityname }}</option>
         {% endfor %}
     </select>
     <input type="text" name="price" placeholder="원하는금액">
