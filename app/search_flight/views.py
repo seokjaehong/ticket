@@ -19,7 +19,7 @@ def SearchFlight(request):
         stardate = datetime.strptime(startdate_info, '%Y.%m.%d')
         enddate = datetime.strptime(enddate_info, '%Y.%m.%d')
 
-        result = get_ticket_information(startdate_info, enddate_info, 'SEL', 'ROM')
+        result = get_ticket_information(startdate_info, enddate_info, 'SEL', 'PUS')
 
         start = result[0]
         arrive = result[1]
