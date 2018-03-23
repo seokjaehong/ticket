@@ -53,7 +53,7 @@ def get_ticket_information(start_date, arrive_date, start, arrive):
     result.append({'출발': departure_info})
     result.append({'도착': arrival_info})
 
-    # driver.close();
+    driver.close();
     return result
 
 

@@ -15,28 +15,24 @@ def checkcity(start, arrive):
 
 
 start, arrive = checkcity('서울', '피렌체')
-print (start,arrive)
+
 # start, arrive = checkcity('서울', '프라하')
 # url = "https://www.google.com/flights/#search;" + "f=" + start + ";t=" + arrive + ";d=2018-04-08;r=2018-04-12"
 url = "https://www.google.com/flights/?gl=us#flt="+start+"."+arrive+".2018-04-08*"+arrive+"."+start+".2018-04-12;c:USD;e:1;sd:1;t:f"
 
-# def makeURL(start, arrive, start_date, arrive_date):
-#     pass
-#
-driver = webdriver.Chrome('chromedriver')
-driver.get(url)
 
 def searchFlight(url, start=False):
+    driver = webdriver.Chrome('chromedriver')
+    driver.get(url)
 
-    # driver.implicitly_wait(5)
-
-    print(url)
-    price_string = driver.find_element_by_class_name('gws-flights-results__price').text
-
+    driver = webdriver.Chrome('chromedriver')
+    driver.get(url)
+    price_string = driver.find_element_by_class_name('LJV2HGB-d-Bb')
+    driver.implicitly_wait(5)
     # time = driver.find_element_by_class_name("LJV2HGB-d-ac").text
     # flight_time = driver.find_element_by_class_name("LJV2HGB-d-Jb").text
     # transfer = driver.find_element_by_class_name("LJV2HGB-d-Sb").text
-    print(price_string)
+    print(price_string.text)
 
     # driver.implicitly_wait(5)
     # choice = list()

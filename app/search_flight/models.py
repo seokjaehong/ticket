@@ -8,6 +8,7 @@ class City_Infomation(models.Model):
     CITY_CODE_GIMPO = '김포'
     CITY_CODE_ROMA = '로마'
     CITY_CODE_FLORENCE = '피렌체'
+
     CHOICES_CITY_TYPE = (
         (CITY_CODE_SEOUL, 'SEL'),
         (CITY_CODE_PUSAN, 'PUS'),
