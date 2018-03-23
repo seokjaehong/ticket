@@ -7,17 +7,58 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <body>
- <h1> 여행계획을 입력해주세요.</h1>
- <form action="" method="post">
-     {% csrf_token %}
-     <input type="text" name="startdate" placeholder="출발일(YYYY.MM.DD)">
-     <input type="text" name="enddate" placeholder="도착일(YYYY.MM.DD)">
-     <input type="text" name="startcity" placeholder="출발도시">
-     <input type="text" name="arrivecity" placeholder="도착도시">
-     <input type="text" name="money" placeholder="원하는금액">
-     <button type="submit"> 검색하기 </button>
- </form>
+<script>
+    $(function () {
+        $('#select-start-city').change(function () {
+            alert('.val() = ' + $('#select-start-city').val() + '  AND  html() = ' + $('#select-start-city option:selected').html() + '  AND .text() = ' + $('#select-start-city option:selected').text());
+        })
+        $('#select-arrival-city').change(function () {
+            alert('.val() = ' + $('#select-arrival-city').val() + '  AND  html() = ' + $('#select-arrival-city option:selected').html() + '  AND .text() = ' + $('#select-start-city option:selected').text());
+        })
+    });
+</script>
+
+<h1> 여행계획을 입력해주세요.</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="text" name="startdate" placeholder="출발일(YYYY.MM.DD)">
+    <input type="text" name="enddate" placeholder="도착일(YYYY.MM.DD)">
+    <!--<input type="text" name="startcity" placeholder="출발도시">-->
+
+    <select name="select-start-city">
+    {% for item in items %}
+        <option value="{{ item.id }}">{{ item.name }}</option>
+    {% endfor %}
+    </select>
+
+
+    <!--<div>-->
+        <!--출발도시-->
+        <!--<input type="text">-->
+        <!--<select id="select-start-city">-->
+            <!--<option value=ICN>인천</option>-->
+            <!--<option value=ROM>로마</option>-->
+            <!--<option value=GIM>김포</option>-->
+            <!--<option value=PUS>부산</option>-->
+            <!--<option value=FLR>피렌체</option>-->
+        <!--</select>-->
+
+        <!--도착도시-->
+        <!--<select id="select-arrival-city">-->
+            <!--<option value=ICN>인천</option>-->
+            <!--<option value=ROM>로마</option>-->
+            <!--<option value=GIM>김포</option>-->
+            <!--<option value=PUS>부산</option>-->
+            <!--<option value=FLR>피렌체</option>-->
+        <!--</select>-->
+    <!--</div>-->
+    <input type="text" name="price" placeholder="원하는금액">
+    <button type="submit"> 저장하기 </button>
+
+
+</form>
 
 </body>
 </html>
