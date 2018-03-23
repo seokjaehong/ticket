@@ -50,10 +50,10 @@ def get_ticket_information(start_date, arrive_date, start, arrive):
     arrival_info = get_time_price_from_home_page()
 
     result = list()
-    result.append({'출발': departure_info, '도착': arrival_info})
+    result.append({'출발': departure_info})
+    result.append({'도착': arrival_info})
     return result
 
 
-result = get_ticket_information('2018.03.31', '2018.04.24', 'SEL', 'PUS')
+result = [{'출발': {'time': '15:40 - 16:35', 'price': 70600}}, {'도착': {'time': '08:10 - 09:05', 'price': 0}}]
 
-print(result)
