@@ -17,19 +17,24 @@ def SearchFlight(request):
     city = City_Infomation.objects.all()
     if request.method == 'POST':
 
-        startcity = request.POST['startcity']
-        arrivecity = request.POST['arrivecity']
-        print(startcity, arrivecity)
+        startcity_info = request.POST['startcity']
+        arrivecity_info = request.POST['arrivecity']
+        print(startcity_info , arrivecity_info)
 
         startdate_info = request.POST['startdate']
         enddate_info = request.POST['enddate']
         price_info = request.POST['price']
 
+        startcity = City_Infomation.objects.get(pk=startcity_info).get_cityname_display()
+        arrivecity = City_Infomation.objects.get(pk=arrivecity_info).get_cityname_display()
+
 
         stardate = datetime.strptime(startdate_info, '%Y.%m.%d')
         enddate = datetime.strptime(enddate_info, '%Y.%m.%d')
 
-        result = get_ticket_information(startdate_info, enddate_info, 'SEL', 'PUS')
+        result = get_ticket_information(startdate_info, enddate_info, startcity, arrivecity)
+
+
 
         start = result[0]
         arrive = result[1]
