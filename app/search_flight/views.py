@@ -8,7 +8,9 @@ from django.template import RequestContext
 from crawler.expedia import get_ticket_information
 from search_flight.models import City_Infomation
 
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def SearchFlight(request):
     context = dict()
 
@@ -17,11 +19,12 @@ def SearchFlight(request):
 
         startcity = request.POST['startcity']
         arrivecity = request.POST['arrivecity']
+        print(startcity, arrivecity)
+
         startdate_info = request.POST['startdate']
         enddate_info = request.POST['enddate']
         price_info = request.POST['price']
 
-        print(startcity, arrivecity)
 
         stardate = datetime.strptime(startdate_info, '%Y.%m.%d')
         enddate = datetime.strptime(enddate_info, '%Y.%m.%d')

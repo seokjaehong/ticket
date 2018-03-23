@@ -9,51 +9,32 @@
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <body>
- <h1> 여행계획을 입력해주세요.</h1>
- <form action="" method="post">
-     {% csrf_token %}
-     <input type="text" name="startdate" placeholder="출발일(YYYY.MM.DD)">
-     <input type="text" name="enddate" placeholder="도착일(YYYY.MM.DD)">
-     <input type="text" name="startcity" placeholder="출발도시">
-     <input type="text" name="arrivecity" placeholder="도착도시">
-     <input type="text" name="price" placeholder="원하는금액">
-     <button type="submit"> 검색하기 </button>
- </form>
-{{ result }}
-
-<script>
-    $(function () {
-        $('#select-start-city').change(function () {
-            alert('.val() = ' + $('#select-start-city').val() + '  AND  html() = ' + $('#select-start-city option:selected').html() + '  AND .text() = ' + $('#select-start-city option:selected').text());
-        })
-        $('#select-arrival-city').change(function () {
-            alert('.val() = ' + $('#select-arrival-city').val() + '  AND  html() = ' + $('#select-arrival-city option:selected').html() + '  AND .text() = ' + $('#select-start-city option:selected').text());
-        })
-    });
-</script>
-
 <h1> 여행계획을 입력해주세요.</h1>
 <form action="" method="post">
     {% csrf_token %}
+    <input type="text" name="startdate" placeholder="출발일(YYYY.MM.DD)">
+    <input type="text" name="enddate" placeholder="도착일(YYYY.MM.DD)">
     출발도시
-    <select name="select-start-city">
-    {% for item in items %}
-       {{ item.id }}
-        <option value="{{ item.cityname }}" name="startcity">{{ item.cityname }}</option>
-    {% endfor %}
+    <select name="startcity">
+        {% csrf_token %}
+        {% for item in items %}
+        {{ item.id }}
+        <option value="{{ item.cityname }}" name="optionstartcity">{{ item.cityname }}</option>
+        {% endfor %}
     </select>
 
     도착도시
-    <select name="select-end-city">
-    {% for item in items %}
-       {{ item.id }}
-        <option value="{{ item.cityname }}" name="arrivecity">{{ item.cityname}}</option>
-    {% endfor %}
+    <select name="arrivecity">
+        {% csrf_token %}
+        {% for item in items %}
+        {{ item.id }}
+        <option value="{{ item.cityname }}" name="optionarrivecity">{{ item.cityname }}</option>
+        {% endfor %}
     </select>
     <input type="text" name="price" placeholder="원하는금액">
-    <button type="submit"> 저장하기 </button>
-
-
+    <button type="submit"> 검색하기</button>
 </form>
+{{ result }}
+
 </body>
 </html>
