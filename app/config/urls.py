@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from mail.views import send_email
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('search_flight.urls')),
+    path('mail/', include('mail.urls')),
 ]

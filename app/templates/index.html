@@ -9,32 +9,50 @@
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <body>
-<h1> 여행계획을 입력해주세요.</h1>
-<form action="" method="post">
-    {% csrf_token %}
-    <input type="text" name="startdate" placeholder="출발일(YYYY.MM.DD)">
-    <input type="text" name="enddate" placeholder="도착일(YYYY.MM.DD)">
-    출발도시
-    <select name="startcity">
+<script src="js/axios.js"></script>
+<script src="js/index.js"></script>
+<div>
+    <h1> 여행계획을 입력해주세요.</h1>
+    <form action="" method="post">
         {% csrf_token %}
-        {% for item in items %}
-        {{ item.id }}
-        <option value="{{ item.id }}" name="optionstartcity">{{ item.cityname }}</option>
-        {% endfor %}
-    </select>
+        <input type="text" name="startdate" placeholder="출발일(YYYY.MM.DD)">
+        <input type="text" name="enddate" placeholder="도착일(YYYY.MM.DD)">
+        출발도시
+        <select name="startcity">
+            {% csrf_token %}
+            {% for item in items %}
+            {{ item.id }}
+            <option value="{{ item.id }}" name="optionstartcity">{{ item.cityname }}</option>
+            {% endfor %}
+        </select>
 
-    도착도시
-    <select name="arrivecity">
-        {% csrf_token %}
-        {% for item in items %}
-        {{ item.id }}
-        <option value="{{ item.id}}" name="optionarrivecity">{{ item.cityname }}</option>
-        {% endfor %}
-    </select>
-    <input type="text" name="price" placeholder="원하는금액">
-    <button type="submit"> 검색하기</button>
-</form>
-{{ result }}
+        도착도시
+        <select name="arrivecity">
+            {% csrf_token %}
+            {% for item in items %}
+            {{ item.id }}
+            <option value="{{ item.id }}" name="optionarrivecity">{{ item.cityname }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="price" placeholder="원하는금액">
+        <button type="submit"> 검색하기</button>
+    </form>
+    <!--<form action="{% url 'mail:send-mail' %}" method="POST" enctype="multipart/form-data">-->
+          <!--{% csrf_token %}-->
+        <!--<h3>받는사람 email 주소 </h3>-->
+        <!--<input type="text" name="mail_address" id="mail_address" value ='devhsj@gmail.com'>-->
+        <!--<h3>제목 </h3>-->
+        <!--<input type="text" name="title" id="title" value="flight info">-->
+        <!--<h3>내용</h3>-->
+        <!--<input type="text" name="contents" id="contents" class="mail-contents" value ={{ result }}>-->
+        <!--<button type="submit"> 전송</button>-->
+    <!--</form>-->
+        <!--<button type="submit"> 전송</button>-->
+    <!--</form>-->
+
+    {{ result }}
+</div>
+
 
 </body>
 </html>
