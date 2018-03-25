@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mail',
+    'django_extensions',
     'members',
     'search_flight',
 
