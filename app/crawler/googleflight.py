@@ -6,8 +6,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 
 
-
-
 def makeURL(start, arrive, start_date, arrive_date):
     pass
 
@@ -18,7 +16,8 @@ def checkcity(start, arrive):
     city['로마'] = 'FCO,CIA,IRT,XRJ'
     city['피렌체'] = 'FLR,FIR,ZMS'
     city['프라하'] = 'PRG,XYG'
-    return city[start],city[arrive]
+    return city[start], city[arrive]
+
 
 def searchFlight(url, start=False):
     driver = webdriver.Chrome('chromedriver')
