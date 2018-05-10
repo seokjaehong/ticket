@@ -1,4 +1,9 @@
+
 from django.db import models
+
+__all__ = {
+    'TicketData',
+}
 
 
 # Create your models here.
@@ -31,9 +36,4 @@ class TicketData(models):
     modify_datetime = models.DateTimeField('수정시간', auto_now_add=True)
     description = models.CharField('설명', max_length=200)
 
-
-class oneway(TicketData):
-    pass
-
-class returnway(TicketData):
-    pass
+    test_column = models.CharField('test',max_length=100)
