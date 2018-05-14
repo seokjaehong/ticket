@@ -113,13 +113,13 @@ if __name__ == '__main__':
         # 도시, 회사정보 저장
         city, _ = TicketData.objects.get_or_create(
             goreturn=ticket_data['goreturn'],
-            departure_date=['departure_date'],
-            departure_duration=['departure_duration'],
+            departure_date=ticket_data['departure_date'],
+            departure_duration=ticket_data['departure_duration'],
             country='Korea',
-            departure_city=['departure_city'],
-            arrival_city='[arrival_city]',
+            departure_city=ticket_data['departure_city'],
+            arrival_city=ticket_data['arrival_city'],
             flight_company='대한항공',
-            ticket_price=['ticket_price'],
+            ticket_price=ticket_data['ticket_price'],
             currency='test',
             fee_policy='test',
             data_source='expedia',
