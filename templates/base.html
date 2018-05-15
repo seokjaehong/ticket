@@ -8,7 +8,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>EB Docker</title>
+    <title>Ticket Information</title>
 
 
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
@@ -18,7 +18,14 @@
     <table class="table">
         <thead class="thead-dark">
         <tr>
-            <th scope="col">goreturn</th>
+            <th scope="col">티켓유형</th>
+            <th scope="col">출발날짜</th>
+            <th scope="col">비행일정</th>
+            <th scope="col">출발도시</th>
+            <th scope="col">도착도시</th>
+            <th>항공사</th>
+            <th scope="col">가격</th>
+            <th scope="col">출처</th>
 
         </tr>
         </thead>
@@ -28,6 +35,13 @@
         {% for ticket in tickets %}
             <tr>
                 <th scope="row">{{ ticket.goreturn }}</th>
+                <th>{{ ticket.departure_date  }}</th>
+                <th>{{ ticket.departure_duration  }}</th>
+                <th>{{ ticket.departure_city  }}</th>
+                <th>{{ ticket.arrival_city  }}</th>
+                <th>{{ ticket.flight_company  }}</th>
+                <th>{{ ticket.ticket_price }}</th>
+                <th>{{ ticket.data_source }}</th>
             </tr>
         {% endfor %}
         </tbody>
