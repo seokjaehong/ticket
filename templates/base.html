@@ -1,20 +1,37 @@
+
+{% load static %}
+
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>EB Docker</title>
+
+
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
 </head>
 <body>
-    <div>
-        <header></header>
-    </div>
-    <div>
-        {% block content %}
-        {% endblock %}
-    </div>
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">goreturn</th>
 
+        </tr>
+        </thead>
+
+        <tbody>
+
+        {% for ticket in tickets %}
+            <tr>
+                <th scope="row">{{ ticket.goreturn }}</th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
