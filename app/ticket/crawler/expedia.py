@@ -80,7 +80,7 @@ class TicketDetailData():
             flight_time = flight_info.find_element_by_css_selector(
                 "div > div > div.uitk-col.tablet-col-1-2.desktop-col-1-2.all-col-fill > div.fluid-content.inline-children.custom-primary-padding > span.duration-emphasis").text
 
-            ##여기 수정할것. 
+            ##여기 수정할것.
             if flight_info.find_elements_by_css_selector(
                 "div > div > div.uitk-col.tablet-col-1-3.desktop-col-1-3.custom-col-r-margin.min-width-large-screens-only > div.primary-content.no-wrap.custom-primary-padding > span.primary-sub-content.urgency").count != 0:
                 arrival_date = new_departure_date + timedelta(days=1)
