@@ -95,6 +95,8 @@ class TicketDetailData():
                 'div > div.uitk-col.custom-width.all-col-fill > div.primary-content').text
             price = int(sub(r'[\d.*?^\d.]', '', price_raw))
 
+            url_link = driver.current_url
+
 
             #  a tag 클릭해야함
             # waypoint=flight.find_element_by_css_selector("#section-offer-leg0-details > div > div.layover-info > span.layover-city").text
@@ -129,7 +131,7 @@ class TicketDetailData():
                 'flight_company': flight_company,
                 'currency': '환율',
                 'data_source': '익스피디아',
-                'url_link': 'http://www.naver.com',
+                'url_link': url_link
 
             })
 
@@ -158,8 +160,8 @@ if __name__ == '__main__':
             arrival_date=ticket_data['arrival_date'],
             arrival_datetime=ticket_data['arrival_datetime'],
 
-            flight_company='대한항공',
-            currency='test',
-            data_source='expedia',
+            flight_company=ticket_data['flight_company'],
+            currency=ticket_data['currency'],
+            data_source=ticket_data['data_source'],
             url_link=ticket_data['url_link'],
         )
