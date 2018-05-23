@@ -17,20 +17,20 @@ ROOT_DIR = os.path.dirname(BASE_DIR)
 
 
 SECRETS_DIR = os.path.join(ROOT_DIR, '.secrets')
-SECRETS_BASE = os.path.join(SECRETS_DIR, 'base.json')
-SECRETS_LOCAL = os.path.join(SECRETS_DIR, 'local.json')
-SECRETS_DEV = os.path.join(SECRETS_DIR, 'dev.json')
-SECRETS_PRODUCTION = os.path.join(SECRETS_DIR, 'production.json')
-SECRETS = json.loads(open(SECRETS_BASE, 'rt').read())
+# SECRETS_BASE = os.path.join(SECRETS_DIR, 'base.json')
+# SECRETS_LOCAL = os.path.join(SECRETS_DIR, 'local.json')
+# SECRETS_DEV = os.path.join(SECRETS_DIR, 'dev.json')
+# SECRETS_PRODUCTION = os.path.join(SECRETS_DIR, 'production.json')
+# SECRETS = json.loads(open(SECRETS_BASE, 'rt').read())
 TEMPLATE_DIR = os.path.join(ROOT_DIR, 'templates')
 
-AWS_ACCESS_KEY_ID = SECRETS['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = SECRETS['AWS_SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = SECRETS['AWS_STORAGE_BUCKET_NAME']
-AWS_DEFAULT_ACL = 'private'
-AWS_S3_REGION_NAME = 'ap-northeast-2'
-AWS_S3_SIGNATURE_VERSION = 's3v4'
-AWS_S3_FILE_OVERWRITE = False
+# AWS_ACCESS_KEY_ID = SECRETS['AWS_ACCESS_KEY_ID']
+# AWS_SECRET_ACCESS_KEY = SECRETS['AWS_SECRET_ACCESS_KEY']
+# AWS_STORAGE_BUCKET_NAME = SECRETS['AWS_STORAGE_BUCKET_NAME']
+# AWS_DEFAULT_ACL = 'private'
+# AWS_S3_REGION_NAME = 'ap-northeast-2'
+# AWS_S3_SIGNATURE_VERSION = 's3v4'
+# AWS_S3_FILE_OVERWRITE = False
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
