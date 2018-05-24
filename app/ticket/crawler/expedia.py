@@ -163,7 +163,7 @@ if __name__ == '__main__':
             departure_datetime=ticket_data['departure_datetime'],
             arrival_date=ticket_data['arrival_date'],
             arrival_datetime=ticket_data['arrival_datetime'],
-
+            flight_time = ticket_data['flight_time'],
             flight_company=ticket_data['flight_company'],
             currency=ticket_data['currency'],
             data_source=ticket_data['data_source'],

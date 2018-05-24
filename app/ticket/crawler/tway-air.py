@@ -1,14 +1,9 @@
 import os
-import sys
-import time
 from datetime import datetime
-from datetime import timedelta
 from re import sub
 
-from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common import action_chains
-from selenium.webdriver.common.keys import Keys
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 import django
@@ -21,11 +16,11 @@ class TwayData():
         driver = webdriver.Chrome('chromedriver')
         url = "https://www.twayair.com/main.do#;"
         driver.get(url)
-        action = action_chains.ActionChains(driver)
         driver.implicitly_wait(3)
 
         flight_informations = driver.find_element_by_xpath(
             "//*[@id='header']/div[3]/div[2]/ul/li[1]/form/fieldset/div/div/ul")
+
         #편도선택
         flight_informations.find_element_by_xpath("//*[@id='header']/div[3]/div[2]/ul/li[1]/form/fieldset/div/ul/li[2]/label").click()
         #노선선택
@@ -35,12 +30,9 @@ class TwayData():
 
         # 가는날자, 사람수 선택, 확인버튼 클릭
         driver.find_element_by_xpath("//*[@id='onwardDatepicker']/div/div[2]/div/table/tbody/tr[4]/td[6]/a").click()
-
-        # driver.find_element_by_xpath("//*[@id='returnDatepicker']/div/div[2]/div/table/tbody/tr[5]/td[4]/a").click()
         driver.find_element_by_xpath(
             "//*[@id='header']/div[3]/div[2]/ul/li[1]/form/fieldset/div/div/ul/li[2]/section/div/div[3]/div[1]/button").click()
         driver.implicitly_wait(1)
-        #//*[@id="header"]/div[3]/div[2]/ul/li[1]/form/fieldset/div/div/ul/li[2]/section/div/div[3]/div[1]/button
         driver.find_element_by_xpath(
             "//*[@id='header']/div[3]/div[2]/ul/li[1]/form/fieldset/div/div/ul/li[4]/section/div/p[3]/a").click()
         driver.maximize_window()
@@ -55,9 +47,6 @@ class TwayData():
 
         departure_date=driver.find_element_by_xpath("//*[@id='divSelectByDate']/div/div/ul[2]/li[1]/a").text
         new_departure_date=datetime.strptime(departure_date, "%Y/%m/%d")
-
-        # departure_date = driver.find_element_by_xpath("//*[@id='resultbox1']/div[2]/ul/li[4]/a/span").text
-        # arrival_date = driver.find_element_by_xpath("//*[@id='resultbox2']/div[2]/ul/li[4]/a/span").text
 
         ticket_informations = driver.find_elements_by_xpath("//*[@id='tbodyOnward']/tr")
 
@@ -114,7 +103,7 @@ if __name__ == '__main__':
             departure_datetime=ticket_data['departure_datetime'],
             arrival_date=ticket_data['arrival_date'],
             arrival_datetime=ticket_data['arrival_datetime'],
-
+            flight_time=ticket_data['flight_time'],
             flight_company=ticket_data['flight_company'],
             currency=ticket_data['currency'],
             data_source=ticket_data['data_source'],
