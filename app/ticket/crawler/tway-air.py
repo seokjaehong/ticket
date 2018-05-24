@@ -75,7 +75,7 @@ class TwayData():
                 'arrival_datetime': arrival_datetime,
                 'flight_time': flight_time,
                 'flight_company': 'tway',
-                'currency': '환율',
+                'currency': 'KRW',
                 'data_source': 'tway',
                 # 'url_link':
 

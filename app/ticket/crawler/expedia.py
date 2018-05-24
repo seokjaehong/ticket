@@ -132,8 +132,8 @@ class TicketDetailData():
                 'arrival_datetime': flight_arrival_datetime,
                 'flight_time': flight_time,
                 'flight_company': flight_company,
-                'currency': '환율',
-                'data_source': '익스피디아',
+                'currency': 'KRW',
+                'data_source': 'Expedia',
                 # 'url_link': url_link
 
             })

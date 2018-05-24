@@ -69,7 +69,7 @@ class JejuData():
                 'arrival_datetime': arrival_datetime,
                 'flight_time': flight_time,
                 'flight_company': 'Jeju',
-                'currency': '환율',
+                'currency': 'KRW',
                 'data_source': 'JejuAir',
             })
         return result
