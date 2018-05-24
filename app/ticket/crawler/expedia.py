@@ -25,13 +25,13 @@ class TicketDetailData():
     #     price_info = int(sub(r'[^\d.]', '', price_raw.text))
     #     print(price_info)
     #     return price_info
-    departure_date = '2018.05.26'
+    departure_date = '2018.06.01'
 
     def get_ticket_information(self):
         driver = webdriver.Chrome('chromedriver')
 
-        origin_place = 'ICN'
-        destination_place = "ROM"
+        origin_place = 'GMP'
+        destination_place = "CJU"
         url = "https://www.expedia.co.kr/Flights-Search?flight-type=on&starDate=" \
               + self.departure_date + "&_xpid=11905%7C1&mode=search&trip=oneway&leg1=from%3A%EC%84%9C%EC%9A%B8%2C+%ED%95%9C%EA%B5%AD+%28" \
               + origin_place + "-%EC%9D%B8%EC%B2%9C%EA%B5%AD%EC%A0%9C%EA%B3%B5%ED%95%AD%29%2Cto%3A%EB%A1%9C%EB%A7%88%2C+%EC%9D%B4%ED%83%88%EB%A6%AC%EC%95%84+%28" \
@@ -81,19 +81,22 @@ class TicketDetailData():
                 "div > div > div.uitk-col.tablet-col-1-2.desktop-col-1-2.all-col-fill > div.fluid-content.inline-children.custom-primary-padding > span.duration-emphasis").text
 
             ##여기 수정할것.
-            if flight_info.find_elements_by_css_selector(
-                "div > div > div.uitk-col.tablet-col-1-3.desktop-col-1-3.custom-col-r-margin.min-width-large-screens-only > div.primary-content.no-wrap.custom-primary-padding > span.primary-sub-content.urgency").count != 0:
-                arrival_date = new_departure_date + timedelta(days=1)
-            else :
-                arrival_date = self.departure_date
-
+            # if flight_info.find_elements_by_css_selector(
+            #     "div > div > div.uitk-col.tablet-col-1-3.desktop-col-1-3.custom-col-r-margin.min-width-large-screens-only > div.primary-content.no-wrap.custom-primary-padding > span.primary-sub-content.urgency").count != 0:
+            #     arrival_date = new_departure_date + timedelta(days=1)
+            # else :
+            #     arrival_date = self.departure_date
+            print()
+            arrival_date=new_departure_date
             price_info = flight.find_element_by_css_selector(
                 'div > div.uitk-grid.all-grid-fallback-alt > div.uitk-col.all-col-shrink')
 
             ##여기 수정할것.
             price_raw = price_info.find_element_by_css_selector(
                 'div > div.uitk-col.custom-width.all-col-fill > div.primary-content').text
-            price = int(sub(r'[\d.*?^\d.]', '', price_raw))
+            price = int(sub(r'[^\d.]', '', price_raw))
+            print(price)
+            # price = int(sub(r'[\d.*?^\d.]', '', price_raw))
 
             url_link = driver.current_url
 
@@ -123,7 +126,7 @@ class TicketDetailData():
                 'way_point': 'test',
                 'way_point_duration': 'testtime',
                 'ticket_price': price,
-                'departure_date': self.departure_date,
+                'departure_date': new_departure_date,
                 'departure_datetime': flight_departure_datetime,
                 'arrival_date': arrival_date,
                 'arrival_datetime': flight_arrival_datetime,
@@ -131,7 +134,7 @@ class TicketDetailData():
                 'flight_company': flight_company,
                 'currency': '환율',
                 'data_source': '익스피디아',
-                'url_link': url_link
+                # 'url_link': url_link
 
             })
 
@@ -147,6 +150,7 @@ if __name__ == '__main__':
 
     for ticket_data in ticket_datas:
         # 도시, 회사정보 저장
+        print(ticket_data)
         city, _ = TicketData.objects.get_or_create(
             origin_place=ticket_data['origin_place'],
             destination_place=ticket_data['destination_place'],
@@ -163,5 +167,5 @@ if __name__ == '__main__':
             flight_company=ticket_data['flight_company'],
             currency=ticket_data['currency'],
             data_source=ticket_data['data_source'],
-            url_link=ticket_data['url_link'],
+            # url_link=ticket_data['url_link'],
         )

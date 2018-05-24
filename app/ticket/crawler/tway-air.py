@@ -53,7 +53,10 @@ class TwayData():
         driver.find_element_by_xpath("//*[@id='btnConfirmRouteNotice']").click()
         driver.implicitly_wait(2)
 
-        departure_date = driver.find_element_by_xpath("//*[@id='resultbox1']/div[2]/ul/li[4]/a/span").text
+        departure_date=driver.find_element_by_xpath("//*[@id='divSelectByDate']/div/div/ul[2]/li[1]/a").text
+        new_departure_date=datetime.strptime(departure_date, "%Y/%m/%d")
+
+        # departure_date = driver.find_element_by_xpath("//*[@id='resultbox1']/div[2]/ul/li[4]/a/span").text
         # arrival_date = driver.find_element_by_xpath("//*[@id='resultbox2']/div[2]/ul/li[4]/a/span").text
 
         ticket_informations = driver.find_elements_by_xpath("//*[@id='tbodyOnward']/tr")
@@ -66,7 +69,8 @@ class TwayData():
                 arrival_datetime = ticket.find_element_by_xpath("td[3]").text
                 flight_time = ticket.find_element_by_xpath("td[4]/span[2]").text
                 print(arrival_datetime)
-                price = ticket.find_element_by_xpath("td[6]/label/span").text
+                price = int(sub(',','',ticket.find_element_by_xpath("td[6]/label/span").text))
+                # pricesub(',','',price)
                 print(price)
 
             result.append({
@@ -76,20 +80,43 @@ class TwayData():
                 'way_point': 'None',
                 'way_point_duration': 'None',
                 'ticket_price': price,
-                'departure_date': departure_date,
+                'departure_date': new_departure_date,
                 'departure_datetime': departure_datetime,
-                'arrival_date': departure_datetime,
+                'arrival_date': new_departure_date,
                 'arrival_datetime': arrival_datetime,
                 'flight_time': flight_time,
                 'flight_company': 'tway',
                 'currency': '환율',
                 'data_source': 'tway',
-                'url_link': driver.current_url
+                # 'url_link':
 
             })
-        return ticket_informations
+        return result
 
 
 if __name__ == '__main__':
+    from ticket.models import TicketData
     crawler = TwayData()
     ticket_datas = crawler.get_ticket_information()
+
+    for ticket_data in ticket_datas:
+        print(ticket_data)
+        # 도시, 회사정보 저장
+        city, _ = TicketData.objects.get_or_create(
+            origin_place=ticket_data['origin_place'],
+            destination_place=ticket_data['destination_place'],
+            is_direct=ticket_data['is_direct'],
+            way_point=ticket_data['way_point'],
+            way_point_duration=ticket_data['way_point_duration'],
+            ticket_price=ticket_data['ticket_price'],
+
+            departure_date=ticket_data['departure_date'],
+            departure_datetime=ticket_data['departure_datetime'],
+            arrival_date=ticket_data['arrival_date'],
+            arrival_datetime=ticket_data['arrival_datetime'],
+
+            flight_company=ticket_data['flight_company'],
+            currency=ticket_data['currency'],
+            data_source=ticket_data['data_source'],
+            # url_link='',
+        )

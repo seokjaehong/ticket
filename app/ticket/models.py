@@ -16,16 +16,16 @@ class TicketData(models.Model):
     ticket_price = models.IntegerField('가격')
 
     departure_date = models.DateField('출발날짜')
-    departure_datetime = models.DateTimeField('출발시간')
+    departure_datetime = models.CharField('출발시간',max_length=10)
 
     arrival_date = models.DateField('도착날짜')
-    arrival_datetime = models.DateTimeField('도착시간')
+    arrival_datetime = models.CharField('도착시간',max_length=10)
     flight_time = models.CharField('총소요시간', max_length=100)
 
     flight_company = models.CharField('항공사명', max_length=20)
     currency = models.CharField('환율', max_length=10, blank=True)
     data_source = models.CharField('데이터 출처', max_length=30)
-    url_link = models.URLField('웹페이지링크')
+
 
     is_delete = models.BooleanField('삭제데이터여부', default=False)
     create_datetime = models.DateTimeField('생성시간', auto_now_add=True)
