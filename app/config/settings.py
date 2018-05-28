@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'members',
     'ticket',
+    'photos',
 ]
 AUTH_USER_MODEL = 'members.User'
 
