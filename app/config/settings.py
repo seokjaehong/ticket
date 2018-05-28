@@ -11,13 +11,26 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 import json
 import os
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 
+# static
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
+
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
+
+# Application definition
 
 SECRETS_DIR = os.path.join(ROOT_DIR, '.secrets')
-# SECRETS_BASE = os.path.join(SECRETS_DIR, 'base.json')
+SECRETS_BASE = os.path.join(SECRETS_DIR, 'base.json')
 # SECRETS_LOCAL = os.path.join(SECRETS_DIR, 'local.json')
 # SECRETS_DEV = os.path.join(SECRETS_DIR, 'dev.json')
 # SECRETS_PRODUCTION = os.path.join(SECRETS_DIR, 'production.json')
@@ -45,16 +58,6 @@ ALLOWED_HOSTS = [
     'localhost',
     '.ap-northeast-2.compute.amazonaws.com',
 ]
-
-STATIC_URL = '/static/'
-
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    STATIC_DIR,
-]
-
-STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -145,5 +148,3 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
-STATIC_URL = '/static/'
