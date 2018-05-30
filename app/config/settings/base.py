@@ -37,7 +37,7 @@ secrets_base = json.loads(open(SECRETS_BASE, 'rt').read())
 
 SECRETS_LOCAL = os.path.join(SECRETS_DIR, 'local.json')
 SECRETS_DEV = os.path.join(SECRETS_DIR, 'dev.json')
-# SECRETS_PRODUCTION = os.path.join(SECRETS_DIR, 'production.json')
+SECRETS_PRODUCTION = os.path.join(SECRETS_DIR, 'production.json')
 
 TEMPLATE_DIR = os.path.join(ROOT_DIR, 'templates')
 
