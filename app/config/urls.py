@@ -25,4 +25,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     # re_path(r'media/(?P<path>.*)$', serve_media),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+ static(settings.base.MEDIA_URL, document_root=settings.base.MEDIA_ROOT)

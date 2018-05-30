@@ -15,15 +15,15 @@ import os
 import raven
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 
 # static
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
-
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     STATIC_DIR,
@@ -33,34 +33,32 @@ STATICFILES_DIRS = [
 
 SECRETS_DIR = os.path.join(ROOT_DIR, '.secrets')
 SECRETS_BASE = os.path.join(SECRETS_DIR, 'base.json')
-# SECRETS_LOCAL = os.path.join(SECRETS_DIR, 'local.json')
-# SECRETS_DEV = os.path.join(SECRETS_DIR, 'dev.json')
+secrets_base = json.loads(open(SECRETS_BASE, 'rt').read())
+
+SECRETS_LOCAL = os.path.join(SECRETS_DIR, 'local.json')
+SECRETS_DEV = os.path.join(SECRETS_DIR, 'dev.json')
 # SECRETS_PRODUCTION = os.path.join(SECRETS_DIR, 'production.json')
-# SECRETS = json.loads(open(SECRETS_BASE, 'rt').read())
+
 TEMPLATE_DIR = os.path.join(ROOT_DIR, 'templates')
 
-# AWS_ACCESS_KEY_ID = SECRETS['AWS_ACCESS_KEY_ID']
-# AWS_SECRET_ACCESS_KEY = SECRETS['AWS_SECRET_ACCESS_KEY']
+AWS_ACCESS_KEY_ID = secrets_base['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = secrets_base['AWS_SECRET_ACCESS_KEY']
 # AWS_STORAGE_BUCKET_NAME = SECRETS['AWS_STORAGE_BUCKET_NAME']
-# AWS_DEFAULT_ACL = 'private'
-# AWS_S3_REGION_NAME = 'ap-northeast-2'
-# AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_DEFAULT_ACL = 'private'
+AWS_S3_REGION_NAME = 'ap-northeast-2'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
 # AWS_S3_FILE_OVERWRITE = False
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_w=e8tr5vn6n^y%$qnu2*#2b@)ld7(j1i+47pwu4i#&$f1l+27'
+SECRET_KEY = secrets_base['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '.ap-northeast-2.compute.amazonaws.com',
-    '127.0.0.1'
-]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -114,12 +112,23 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+# DATABASES = secrets_base['DATABASES']
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'HOST': 'hong1-db.csrqr9swhgbh.ap-northeast-2.rds.amazonaws.com',
+#         'NAME': 'ticket_data',
+#         'USER': 'Hong',
+#         'PASSWORD': 'tjrwo123',
+#         'PORT': 5432
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -142,9 +151,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -155,9 +164,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 RAVEN_CONFIG = {
-    'dsn': 'https://4e6b33ba316f419a8d701eaffd9d13a3:4a39c3c402b64c82aee2b7e43efb9261@sentry.io/1215610',
-        # If you are using git, you can also automatically configure the
-        # release based on the git info.
+    'dsn': secrets_base['RAVEN_DSN'],
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
     'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
 }
 
@@ -176,7 +185,7 @@ LOGGING = {
     },
     'handlers': {
         'sentry': {
-            'level': 'ERROR', # To capture more than ERROR, change to WARNING, INFO, etc.
+            'level': 'ERROR',  # To capture more than ERROR, change to WARNING, INFO, etc.
             'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
             'tags': {'custom-tag': 'x'},
         },
