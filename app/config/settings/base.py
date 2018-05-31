@@ -43,10 +43,11 @@ TEMPLATE_DIR = os.path.join(ROOT_DIR, 'templates')
 
 AWS_ACCESS_KEY_ID = secrets_base['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = secrets_base['AWS_SECRET_ACCESS_KEY']
-# AWS_STORAGE_BUCKET_NAME = SECRETS['AWS_STORAGE_BUCKET_NAME']
+AWS_STORAGE_BUCKET_NAME = secrets_base['AWS_STORAGE_BUCKET_NAME']
 AWS_DEFAULT_ACL = 'private'
 AWS_S3_REGION_NAME = 'ap-northeast-2'
 AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_S3_ENDPOINT_URL = 'http://s3.ap-northeast-2.amazonaws.com'
 # AWS_S3_FILE_OVERWRITE = False
 
 # Quick-start development settings - unsuitable for production
@@ -70,6 +71,7 @@ INSTALLED_APPS = [
     'raven.contrib.django.raven_compat',
 
     'members',
+    'storages',
     'ticket',
     'photos',
 ]
@@ -107,7 +109,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+# WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
