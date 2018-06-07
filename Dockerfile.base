@@ -3,6 +3,7 @@
 FROM        python:3.6.4-slim
 MAINTAINER  devhsj@gmail.com
 
+
 ENV         LANG C.UTF-8
 
 RUN     apt-get -y update
@@ -14,4 +15,4 @@ COPY    .requirements /srv/.requirements
 
 WORKDIR /srv
 RUN     pip install --upgrade pip
-RUN     pip install -r /srv/.requirements/dev.txt
+RUN     pip install -r /srv/.requirements/production.txt
