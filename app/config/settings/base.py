@@ -169,7 +169,7 @@ RAVEN_CONFIG = {
     'dsn': SECRETS['RAVEN_DSN'],
     # If you are using git, you can also automatically configure the
     # release based on the git info.
-    'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+    'release': SECRETS['RAVEN_RELEASE'],
 }
 
 LOGGING = {
