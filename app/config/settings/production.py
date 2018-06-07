@@ -4,6 +4,7 @@ secrets = json.loads(open(SECRETS_PRODUCTION, 'rt').read())
 
 DEBUG = False
 ALLOWED_HOSTS = [
+    # 'localhost',
     'amazonaws.com',
 ]
 DATABASES = secrets['DATABASES']
