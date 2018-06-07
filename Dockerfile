@@ -2,7 +2,7 @@ FROM        hsj2334p1/eb-docker:base
 MAINTAINER  devhsj@gmail.com
 
 
-ENV         BUILD_MODE              production
+ENV         BUILD_MODE              product
 ENV         DJANGO_SETTINGS_MODULE  config.settings.${BUILD_MODE}
 
 COPY        . /srv/ticket
