@@ -22,6 +22,8 @@ class TicketData(models.Model):
     arrival_datetime = models.CharField('도착시간',max_length=10)
     flight_time = models.CharField('총소요시간', max_length=100)
 
+    leftseat = models.CharField('잔여좌석',max_length=30,blank=True)
+
     flight_company = models.CharField('항공사명', max_length=20)
     currency = models.CharField('환율', max_length=10, blank=True)
     data_source = models.CharField('데이터 출처', max_length=30)

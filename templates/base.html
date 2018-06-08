@@ -30,6 +30,7 @@
             <th scope="col">가격</th>
             <th scope="col">출처</th>
             <th>데이터 추출시간 </th>
+            <th>잔여 좌석</th>
         </tr>
         </thead>
 
@@ -47,6 +48,7 @@
                 <th>{{ ticket.ticket_price }}</th>
                 <th>{{ ticket.data_source }}</th>
                 <th>{{ ticket.create_datetime }}</th>
+                <th>{{ ticket.leftseat }}</th>
             </tr>
         {% endfor %}
         </tbody>
