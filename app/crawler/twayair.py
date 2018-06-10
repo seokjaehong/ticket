@@ -11,6 +11,10 @@ import django
 
 django.setup()
 
+__all__ = (
+    'TwayData',
+)
+
 
 class TwayData():
     driver = webdriver.Chrome('chromedriver')
@@ -18,11 +22,11 @@ class TwayData():
     driver.get(url)
     driver.implicitly_wait(3)
 
-    def yearpicker(self,year):
+    def yearpicker(self, year):
         elements = self.driver.find_elements_by_xpath("//*[@id='onwardDatepicker']/div/div[2]/div/div/select[2]/option")
 
         for years in elements:
-            if years.text==year:
+            if years.text == year:
                 years.click()
                 break
 
@@ -43,7 +47,7 @@ class TwayData():
                 dates.click()
                 break
 
-    def get_ticket_information(self):
+    def get_ticket_information(self, year, month, date):
 
         flight_informations = self.driver.find_element_by_xpath(
             "//*[@id='header']/div[3]/div[2]/ul/li[1]/form/fieldset/div/div/ul")
@@ -57,9 +61,9 @@ class TwayData():
         flight_informations.find_element_by_xpath("li[1]/section/div/dl[1]/dd[1]/a").click()
 
         # 가는날짜, 사람수 선택, 확인버튼 클릭
-        self.yearpicker('2018')
-        self.monthpicker('07')
-        self.datepicker('5')
+        self.yearpicker(year)
+        self.monthpicker(month)
+        self.datepicker(date)
         # self.driver.find_element_by_xpath(
         #     "//*[@id='onwardDatepicker']/div/div[2]/div/table/tbody/tr[4]/td[6]/a").click()
 
@@ -122,12 +126,12 @@ if __name__ == '__main__':
     from ticket.models import TicketData
 
     crawler = TwayData()
-    ticket_datas = crawler.get_ticket_information()
+    ticket_datas = crawler.get_ticket_information('2018', '07', '6')
 
     for ticket_data in ticket_datas:
         # print(ticket_data)
         # 도시, 회사정보 저장
-        city, _ = TicketData.objects.get_or_create(
+        city, _ = TicketData.objects.update_or_create(
             origin_place=ticket_data['origin_place'],
             destination_place=ticket_data['destination_place'],
             is_direct=ticket_data['is_direct'],

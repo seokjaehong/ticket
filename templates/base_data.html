@@ -1,0 +1,58 @@
+
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ticket Information</title>
+
+
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">출발날짜</th>
+            <th scope="col">출발시간</th>
+            <th scope="col">도착날짜</th>
+            <th scope="col">도착시간</th>
+
+            <th scope="col">비행시간</th>
+            <th scope="col">출발도시</th>
+            <th scope="col">도착도시</th>
+            <th>항공사</th>
+            <th scope="col">가격</th>
+            <th scope="col">출처</th>
+            <th>데이터 추출시간 </th>
+            <th>잔여 좌석</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for ticket in tickets %}
+            <tr>
+                <th>{{ ticket.departure_date  }}</th>
+                <th>{{ ticket.departure_datetime }}</th>
+                <th>{{ ticket.arrival_date }}</th>
+                <th>{{ ticket.arrival_datetime }}</th>
+                <th>{{ ticket.flight_time }}</th>
+                <th>{{ ticket.origin_place  }}</th>
+                <th>{{ ticket.destination_place  }}</th>
+                <th>{{ ticket.flight_company  }}</th>
+                <th>{{ ticket.ticket_price }}</th>
+                <th>{{ ticket.data_source }}</th>
+                <th>{{ ticket.create_datetime }}</th>
+                <th>{{ ticket.leftseat }}</th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

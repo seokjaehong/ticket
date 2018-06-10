@@ -33,3 +33,4 @@ class TicketData(models.Model):
     create_datetime = models.DateTimeField('생성시간', auto_now_add=True)
     modify_datetime = models.DateTimeField('수정시간', auto_now_add=True)
     description = models.CharField('설명', max_length=200, blank=True, null=True)
+

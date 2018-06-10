@@ -1,58 +1,53 @@
-
 {% load static %}
-
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ticket Information</title>
-
-
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Melon archive</title>
+	<link rel="stylesheet" href="{% static 'css/base.css' %}">
+	<link rel="stylesheet" href="{% static 'css/header.css' %}">
+	<link rel="stylesheet" href="{% static 'css/artist-list.css' %}">
+	<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+	<link rel="stylesheet" href="{% static 'css/song-list.css' %}">
 </head>
 <body>
-<div class="container">
-    <table class="table">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">출발날짜</th>
-            <th scope="col">출발시간</th>
-            <th scope="col">도착날짜</th>
-            <th scope="col">도착시간</th>
+	<div class="header-wrap">
+		<header class="main-header clearfix">
+{#			<div class="search-container">#}
+{#				<a href="">#}
+{#					<img src="{% static 'images/logo.png' %}" alt="">#}
+{#				</a>#}
+{#				<div class="input-container">#}
+{#					<input type="text" class="search-input">#}
+{#				</div>#}
+{#			</div>#}
+{#			<nav class="main-header-nav clearfix">#}
+{#				<ul class="clearfix">#}
+{#					<li><a href="{% url 'artist:artist-list' %}">아티스트</a></li>#}
+{#					<li><a href="{% url 'album:album-list' %}">앨범</a></li>#}
+{#					<li><a href="{% url 'song:song-list' %}">곡</a></li>#}
+{#				</ul>#}
+{#			</nav>#}
+{#			<nav class="main-header-nav nav-right clearfix">#}
+{#				<ul class="clearfix">#}
+{#					{% if user.is_authenticated %}#}
+{#					<li><a href="">내 정보 ({{ request.user.username }})</a></li>#}
+{#					<li><a href="{% url 'logout' %}">로그아웃</a></li>#}
+{#					{% else %}#}
+{#					<li><a href="{% url 'login' %}">로그인</a></li>#}
+{#					<li><a href="{% url 'signup' %}">회원가입</a></li>#}
+{#					{% endif %}#}
+{#				</ul>#}
+{#			</nav>#}
+		</header>
+	</div>
 
-            <th scope="col">비행시간</th>
-            <th scope="col">출발도시</th>
-            <th scope="col">도착도시</th>
-            <th>항공사</th>
-            <th scope="col">가격</th>
-            <th scope="col">출처</th>
-            <th>데이터 추출시간 </th>
-            <th>잔여 좌석</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        {% for ticket in tickets %}
-            <tr>
-                <th>{{ ticket.departure_date  }}</th>
-                <th>{{ ticket.departure_datetime }}</th>
-                <th>{{ ticket.arrival_date }}</th>
-                <th>{{ ticket.arrival_datetime }}</th>
-                <th>{{ ticket.flight_time }}</th>
-                <th>{{ ticket.origin_place  }}</th>
-                <th>{{ ticket.destination_place  }}</th>
-                <th>{{ ticket.flight_company  }}</th>
-                <th>{{ ticket.ticket_price }}</th>
-                <th>{{ ticket.data_source }}</th>
-                <th>{{ ticket.create_datetime }}</th>
-                <th>{{ ticket.leftseat }}</th>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+	<div class="content-block">
+		{% block content %}
+		{% endblock %}
+	</div>
 </body>
 </html>

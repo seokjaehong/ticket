@@ -6,7 +6,7 @@ from django.http import HttpResponse, FileResponse
 from django.shortcuts import render
 
 from config import settings
-from ticket.models import TicketData
+from ticket.models.ticketdata import TicketData
 
 
 def index(request):
@@ -16,8 +16,8 @@ def index(request):
     }
     print(context)
     # return HttpResponse('Hello')
-    # return render(request,'base.html',context)
-    return render(request, 'base.html', context)
+    # return render(request,'base_data.html',context)
+    return render(request, 'base_data.html', context)
 
 
 def serve_media(request, path):

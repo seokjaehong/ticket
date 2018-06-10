@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 
 from config import settings
 from config.views import serve_media
@@ -24,5 +24,6 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('ticket/', include('ticket.urls')),
     # re_path(r'media/(?P<path>.*)$', serve_media),
 ]+ static(settings.base.MEDIA_URL, document_root=settings.base.MEDIA_ROOT)
