@@ -3,13 +3,7 @@ from datetime import datetime
 from re import sub
 
 from selenium import webdriver
-from selenium.webdriver.common import action_chains
 from selenium.common.exceptions import NoSuchElementException
-#
-# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
-# import django
-
-# django.setup()
 
 __all__ = (
     'TwayData',
@@ -36,7 +30,14 @@ class TwayData():
         self.description = ''
 
     def get_ticket_information(self, year, month, date):
-        driver = webdriver.Chrome('chromedriver')
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
+        options.add_argument('window-size=1920x1080')
+        options.add_argument("disable-gpu")
+        print('options ok ')
+        driver = webdriver.Chrome('chromedriver',chrome_options=options)
+
+        # driver = webdriver.Chrome('chromedriver')
         url = "https://www.twayair.com/main.do#;"
         driver.get(url)
         driver.implicitly_wait(3)
