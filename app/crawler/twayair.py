@@ -1,9 +1,13 @@
 import os
-from datetime import datetime
+import time
+from datetime import datetime, timedelta
 from re import sub
 
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 __all__ = (
     'TwayData',
@@ -16,14 +20,14 @@ class TwayData():
     options.add_argument('window-size=1920x1080')
     options.add_argument("disable-gpu")
     driver = webdriver.Chrome('chromedriver', chrome_options=options)
-
+    # driver = webdriver.Chrome('chromedriver')
     url = "https://www.twayair.com/main.do#;"
     driver.get(url)
     driver.implicitly_wait(3)
 
     def __init__(self):
-        self.origin_place = 'GMP'
-        self.destination_place = 'CJU'
+        self.origin_place = None
+        self.destination_place = None
         self.is_direct = False
         self.way_point = None
         self.way_point_duration = None
@@ -65,11 +69,66 @@ class TwayData():
                 dates.click()
                 break
 
-    def get_ticket_information(self, departure_date):
+    def daterange(self, start_date, end_date):
+        for n in range(int((end_date - start_date).days)):
+            yield start_date + timedelta(n)
 
-        year = departure_date.split('-')[0]
-        month = departure_date.split('-')[1]
-        date = departure_date.split('-')[2]
+    def get_ticket_detail(self, single_date):
+        self.driver.implicitly_wait(3)
+
+        departure_date = self.driver.find_element_by_xpath("//*[@id='divSelectByDate']/div/div/ul[2]/li[1]/a").text
+        new_departure_date = datetime.strptime(departure_date, "%Y/%m/%d")
+        print('get_signle_date:', single_date)
+        print('departure_date:', departure_date)
+
+        global ticket_informations
+        ticket_informations = self.driver.find_elements_by_xpath("//*[@id='tbodyOnward']/tr")
+
+        result = []
+        for ticket in ticket_informations:
+            if ticket.get_attribute("class") != "trOnward":
+                departure_datetime = ticket.find_element_by_xpath("td[1]/div").text
+                print(departure_datetime)
+                arrival_datetime = ticket.find_element_by_xpath("td[3]").text
+                print(arrival_datetime)
+                flight_time = ticket.find_element_by_xpath("td[4]/span[2]").text
+                print(flight_time)
+                price = int(sub(',', '', ticket.find_element_by_xpath("td[6]/label/span").text))
+                print(price)
+                # try:
+                #     leftseat = ticket.find_element_by_xpath("td[6]/p/em").text
+                # except NoSuchElementException:
+                #     leftseat = ""
+                lefseat = ""
+
+            result.append({
+                'origin_place': 'GMP',
+                'destination_place': 'CJU',
+                'is_direct': True,
+                'way_point': 'None',
+                'way_point_duration': 'None',
+                'ticket_price': price,
+                'departure_date': new_departure_date,
+                'departure_datetime': departure_datetime,
+                'arrival_date': new_departure_date,
+                'arrival_datetime': arrival_datetime,
+                'flight_time': flight_time,
+                'flight_company': 'tway',
+                'currency': 'KRW',
+                'data_source': 'tway',
+                'leftseat': lefseat,
+
+            })
+        return result
+
+    def get_ticket_information(self, departure_date, add_days):
+        str_departure_date = str(departure_date)
+        year = str_departure_date.split('-')[0]
+        month = str_departure_date.split('-')[1]
+        date = str_departure_date.split('-')[2]
+
+        end_date = departure_date + timedelta(days=add_days)
+        print(end_date)
 
         flight_informations = self.driver.find_element_by_xpath(
             "//*[@id='header']/div[3]/div[2]/ul/li[1]/form/fieldset/div/div/ul")
@@ -101,74 +160,17 @@ class TwayData():
         self.driver.implicitly_wait(2)
         self.driver.find_element_by_xpath("//*[@id='btnConfirmRouteNotice']").click()
         self.driver.implicitly_wait(2)
-
-        departure_date = self.driver.find_element_by_xpath("//*[@id='divSelectByDate']/div/div/ul[2]/li[1]/a").text
-        new_departure_date = datetime.strptime(departure_date, "%Y/%m/%d")
-
-        ticket_informations = self.driver.find_elements_by_xpath("//*[@id='tbodyOnward']/tr")
-
         result = []
-        for ticket in ticket_informations:
-            if ticket.get_attribute("class") != "trOnward":
+        wait = WebDriverWait(self.driver, 5)
 
-                departure_datetime = ticket.find_element_by_xpath("td[1]/div").text
-                arrival_datetime = ticket.find_element_by_xpath("td[3]").text
-                flight_time = ticket.find_element_by_xpath("td[4]/span[2]").text
-                price = int(sub(',', '', ticket.find_element_by_xpath("td[6]/label/span").text))
+        for single_date in self.daterange(departure_date, end_date):
+            print('single_date:', single_date)
+            single_result = self.get_ticket_detail(single_date)
+            result.append(single_result)
+            global next_day_box
+            next_day_box = self.driver.find_element_by_xpath("//*[@id='resultbox1']/div[2]/ul/li[5]/a")
+            next_day_box.click()
+            wait.until(EC.staleness_of(next_day_box))
 
-                try:
-                    leftseat = ticket.find_element_by_xpath("td[6]/p/em").text
-                except NoSuchElementException:
-                    leftseat = ""
-
-            result.append({
-                'origin_place': 'GMP',
-                'destination_place': 'CJU',
-                'is_direct': True,
-                'way_point': 'None',
-                'way_point_duration': 'None',
-                'ticket_price': price,
-                'departure_date': new_departure_date,
-                'departure_datetime': departure_datetime,
-                'arrival_date': new_departure_date,
-                'arrival_datetime': arrival_datetime,
-                'flight_time': flight_time,
-                'flight_company': 'tway',
-                'currency': 'KRW',
-                'data_source': 'tway',
-                'leftseat': leftseat,
-
-            })
         self.driver.close()
         return result
-
-# if __name__ == '__main__':
-#     # from ticket.models import TicketData
-#
-#     from ticket.models.ticketdata import TicketData
-#
-#     crawler = TwayData()
-#     ticket_datas = crawler.get_ticket_information('2018', '07', '11')
-#
-#     for ticket_data in ticket_datas:
-#         # print(ticket_data)
-#         # 도시, 회사정보 저장
-#         city, _ = TicketData.objects.update_or_create(
-#             origin_place=ticket_data['origin_place'],
-#             destination_place=ticket_data['destination_place'],
-#             is_direct=ticket_data['is_direct'],
-#             way_point=ticket_data['way_point'],
-#             way_point_duration=ticket_data['way_point_duration'],
-#             ticket_price=ticket_data['ticket_price'],
-#
-#             departure_date=ticket_data['departure_date'],
-#             departure_datetime=ticket_data['departure_datetime'],
-#             arrival_date=ticket_data['arrival_date'],
-#             arrival_datetime=ticket_data['arrival_datetime'],
-#             flight_time=ticket_data['flight_time'],
-#             flight_company=ticket_data['flight_company'],
-#             currency=ticket_data['currency'],
-#             data_source=ticket_data['data_source'],
-#             leftseat=ticket_data['leftseat'],
-#             # url_link='',
-#         )
