@@ -12,11 +12,11 @@ RUN         cp -f   /srv/ticket/.config/${BUILD_MODE}/nginx.conf       /etc/ngin
             cp -f   /srv/ticket/.config/${BUILD_MODE}/nginx-app.conf   /etc/nginx/sites-available/ &&\
             rm -f   /etc/nginx/sites-enabled/* &&\
             ln -sf  /etc/nginx/sites-available/nginx-app.conf   /etc/nginx/sites-enabled/
-
+            cp -f   /srv/ticket/app/cronjob.txt /etc/cron.d/
 #supervisord 설정 파일 복사
 
 RUN         cp -f   /srv/ticket/.config/${BUILD_MODE}/supervisord.conf /etc/supervisor/conf.d/
-COPY        /srv/ticket/app/cronjob.txt /etc/cron.d/
+
 #supervisor를 실행
 CMD         pkill nginx; supervisord -n
 EXPOSE      80
