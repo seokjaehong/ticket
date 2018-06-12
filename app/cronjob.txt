@@ -1,0 +1,4 @@
+* * * * * export DISPLAY=:0 &&  \
+/home/ubuntu/.pyenv/versions/ticket/bin/python3 \
+/srv/ticket/app/manage.py job_twayair \
+--settings=config.settings.dev > /home/ubuntu/ticket/app/backup.log 2>&1

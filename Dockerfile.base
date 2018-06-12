@@ -15,4 +15,5 @@ COPY    .requirements /srv/.requirements
 
 WORKDIR /srv
 RUN     pip install --upgrade pip
+RUN     apt-get install -y cron
 RUN     pip install -r /srv/.requirements/production.txt
