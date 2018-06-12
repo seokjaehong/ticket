@@ -12,9 +12,12 @@ RUN         cp -f   /srv/ticket/.config/${BUILD_MODE}/nginx.conf       /etc/ngin
             cp -f   /srv/ticket/.config/${BUILD_MODE}/nginx-app.conf   /etc/nginx/sites-available/ &&\
             rm -f   /etc/nginx/sites-enabled/* &&\
             ln -sf  /etc/nginx/sites-available/nginx-app.conf   /etc/nginx/sites-enabled/\
-            cp -f   /srv/ticket/app/cronjob.txt                         /etc/cron.d/
-#supervisord 설정 파일 복사
+            cp -f   /srv/ticket/app/cronjob.txt /etc/cron.d/
+# crontab 실행 
+RUN         crontab /etc/cronjob.txt
+RUN         chmod 600 /etc/crontab
 
+#supervisord 설정 파일 복사
 RUN         cp -f   /srv/ticket/.config/${BUILD_MODE}/supervisord.conf /etc/supervisor/conf.d/
 
 #supervisor를 실행
