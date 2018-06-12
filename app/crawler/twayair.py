@@ -8,6 +8,7 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+import time
 
 __all__ = (
     'TwayData',
@@ -15,12 +16,13 @@ __all__ = (
 
 
 class TwayData():
+    start_time = time.time()
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     options.add_argument('window-size=1920x1080')
     options.add_argument("disable-gpu")
     driver = webdriver.Chrome('chromedriver', chrome_options=options)
-    # driver = webdriver.Chrome('chromedriver')
+
     url = "https://www.twayair.com/main.do#;"
     driver.get(url)
     driver.implicitly_wait(3)
@@ -78,8 +80,6 @@ class TwayData():
 
         departure_date = self.driver.find_element_by_xpath("//*[@id='divSelectByDate']/div/div/ul[2]/li[1]/a").text
         new_departure_date = datetime.strptime(departure_date, "%Y/%m/%d")
-        print('get_signle_date:', single_date)
-        print('departure_date:', departure_date)
 
         global ticket_informations
         ticket_informations = self.driver.find_elements_by_xpath("//*[@id='tbodyOnward']/tr")
@@ -90,16 +90,12 @@ class TwayData():
                 departure_datetime = ticket.find_element_by_xpath("td[1]/div").text
                 print(departure_datetime)
                 arrival_datetime = ticket.find_element_by_xpath("td[3]").text
-                print(arrival_datetime)
                 flight_time = ticket.find_element_by_xpath("td[4]/span[2]").text
-                print(flight_time)
                 price = int(sub(',', '', ticket.find_element_by_xpath("td[6]/label/span").text))
-                print(price)
-                # try:
-                #     leftseat = ticket.find_element_by_xpath("td[6]/p/em").text
-                # except NoSuchElementException:
-                #     leftseat = ""
-                lefseat = ""
+                leftseat = ""
+
+                if ticket.find_elements_by_xpath("td[6]/p/em"):
+                    leftseat = ticket.find_element_by_xpath("td[6]/p/em").text
 
             result.append({
                 'origin_place': 'GMP',
@@ -116,7 +112,7 @@ class TwayData():
                 'flight_company': 'tway',
                 'currency': 'KRW',
                 'data_source': 'tway',
-                'leftseat': lefseat,
+                'leftseat': leftseat,
 
             })
         return result
@@ -172,5 +168,6 @@ class TwayData():
             next_day_box.click()
             wait.until(EC.staleness_of(next_day_box))
 
+        print("---crawler %s seconds ---" % (time.time() - self.start_time))
         self.driver.close()
         return result
