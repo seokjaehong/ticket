@@ -14,7 +14,7 @@ RUN         cp -f   /srv/ticket/.config/${BUILD_MODE}/nginx.conf       /etc/ngin
             ln -sf  /etc/nginx/sites-available/nginx-app.conf   /etc/nginx/sites-enabled/\
             cp -f   /srv/ticket/app/cronjob.txt /etc/cron.d/
 # crontab 실행
-RUN         crontab /srv/ticket/app/cronjob.txt
+RUN         crontab /etc/cron.d/cronjob.txt
 RUN         chmod 600 /etc/crontab
 
 #supervisord 설정 파일 복사
