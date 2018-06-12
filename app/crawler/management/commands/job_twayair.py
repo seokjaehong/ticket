@@ -7,7 +7,7 @@ class Command(BaseCommand):
         from ticket.models.ticketdata import TicketData
 
         crawler = TwayData()
-        ticket_datas = crawler.get_ticket_information('2018', '07', '13')
+        ticket_datas = crawler.get_ticket_information('2018', '07', '02')
 
         for ticket_data in ticket_datas:
             ticket, _ = TicketData.objects.update_or_create(

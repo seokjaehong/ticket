@@ -11,6 +11,16 @@ __all__ = (
 
 
 class TwayData():
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+    options.add_argument('window-size=1920x1080')
+    options.add_argument("disable-gpu")
+    driver = webdriver.Chrome('chromedriver', chrome_options=options)
+
+    url = "https://www.twayair.com/main.do#;"
+    driver.get(url)
+    driver.implicitly_wait(3)
+
     def __init__(self):
         self.origin_place = 'GMP'
         self.destination_place = 'CJU'
@@ -29,47 +39,39 @@ class TwayData():
         self.data_source = 'tway'
         self.description = ''
 
-    def get_ticket_information(self, year, month, date):
-        options = webdriver.ChromeOptions()
-        options.add_argument('headless')
-        options.add_argument('window-size=1920x1080')
-        options.add_argument("disable-gpu")
-        print('options ok ')
-        driver = webdriver.Chrome('chromedriver',chrome_options=options)
+    def yearpicker(self, year):
+        elements = self.driver.find_elements_by_xpath(
+            "//*[@id='onwardDatepicker']/div/div[2]/div/div/select[2]/option")
+        for years in elements:
+            if years.text == year:
+                years.click()
+                break
 
-        # driver = webdriver.Chrome('chromedriver')
-        url = "https://www.twayair.com/main.do#;"
-        driver.get(url)
-        driver.implicitly_wait(3)
+    def monthpicker(self, month):
+        elements = self.driver.find_elements_by_xpath(
+            "//*[@id='onwardDatepicker']/div/div[2]/div/div/select[1]/option")
+        for months in elements:
+            if months.text == month:
+                months.click()
+                break
 
-        def yearpicker(year):
-            elements = driver.find_elements_by_xpath(
-                "//*[@id='onwardDatepicker']/div/div[2]/div/div/select[2]/option")
+    def datepicker(self, date):
+        if date.startswith('0'):
+            date = date[1]
+        elements = self.driver.find_elements_by_xpath(
+            "//*[@id='onwardDatepicker']/div/div[2]/div/table/tbody/tr/td/a")
+        for dates in elements:
+            if dates.is_enabled() and dates.is_displayed() and str(dates.get_attribute("title")) == date:
+                dates.click()
+                break
 
-            for years in elements:
-                if years.text == year:
-                    years.click()
-                    break
+    def get_ticket_information(self, departure_date):
 
-        def monthpicker(month):
-            elements = driver.find_elements_by_xpath(
-                "//*[@id='onwardDatepicker']/div/div[2]/div/div/select[1]/option")
+        year = departure_date.split('-')[0]
+        month = departure_date.split('-')[1]
+        date = departure_date.split('-')[2]
 
-            for months in elements:
-                if months.text == month:
-                    months.click()
-                    break
-
-        def datepicker(date):
-            elements = driver.find_elements_by_xpath(
-                "//*[@id='onwardDatepicker']/div/div[2]/div/table/tbody/tr/td/a")
-
-            for dates in elements:
-                if dates.is_enabled() and dates.is_displayed() and str(dates.get_attribute("title")) == date:
-                    dates.click()
-                    break
-
-        flight_informations = driver.find_element_by_xpath(
+        flight_informations = self.driver.find_element_by_xpath(
             "//*[@id='header']/div[3]/div[2]/ul/li[1]/form/fieldset/div/div/ul")
 
         # 편도선택
@@ -81,31 +83,29 @@ class TwayData():
         flight_informations.find_element_by_xpath("li[1]/section/div/dl[1]/dd[1]/a").click()
 
         # 가는날짜, 사람수 선택, 확인버튼 클릭
-        yearpicker(year)
-        monthpicker(month)
-        datepicker(date)
-        # self.driver.find_element_by_xpath(
-        #     "//*[@id='onwardDatepicker']/div/div[2]/div/table/tbody/tr[4]/td[6]/a").click()
+        self.yearpicker(year)
+        self.monthpicker(month)
+        self.datepicker(date)
 
-        driver.find_element_by_xpath(
+        self.driver.find_element_by_xpath(
             "//*[@id='header']/div[3]/div[2]/ul/li[1]/form/fieldset/div/div/ul/li[2]/section/div/div[3]/div[1]/button").click()
-        driver.implicitly_wait(1)
-        driver.find_element_by_xpath(
+        self.driver.implicitly_wait(1)
+        self.driver.find_element_by_xpath(
             "//*[@id='header']/div[3]/div[2]/ul/li[1]/form/fieldset/div/div/ul/li[4]/section/div/p[3]/a").click()
-        driver.maximize_window()
+        self.driver.maximize_window()
 
         # 화면 넘어갈 때 필요한 확인버튼 클릭
-        webElement = driver.find_element_by_css_selector("#ancBooking")
+        webElement = self.driver.find_element_by_css_selector("#ancBooking")
         webElement.click()
 
-        driver.implicitly_wait(2)
-        driver.find_element_by_xpath("//*[@id='btnConfirmRouteNotice']").click()
-        driver.implicitly_wait(2)
+        self.driver.implicitly_wait(2)
+        self.driver.find_element_by_xpath("//*[@id='btnConfirmRouteNotice']").click()
+        self.driver.implicitly_wait(2)
 
-        departure_date = driver.find_element_by_xpath("//*[@id='divSelectByDate']/div/div/ul[2]/li[1]/a").text
+        departure_date = self.driver.find_element_by_xpath("//*[@id='divSelectByDate']/div/div/ul[2]/li[1]/a").text
         new_departure_date = datetime.strptime(departure_date, "%Y/%m/%d")
 
-        ticket_informations = driver.find_elements_by_xpath("//*[@id='tbodyOnward']/tr")
+        ticket_informations = self.driver.find_elements_by_xpath("//*[@id='tbodyOnward']/tr")
 
         result = []
         for ticket in ticket_informations:
@@ -139,10 +139,8 @@ class TwayData():
                 'leftseat': leftseat,
 
             })
-        driver.close()
+        self.driver.close()
         return result
-
-
 
 # if __name__ == '__main__':
 #     # from ticket.models import TicketData

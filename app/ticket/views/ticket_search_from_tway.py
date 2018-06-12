@@ -17,18 +17,13 @@ def ticket_search_from_tway(request):
     :param request:
     :return:
     """
-    departuredate = request.GET.get('departuredate')
+    departure_date = request.GET.get('departure_date')
     tickets = []
 
-    if departuredate:
-
-        year = departuredate.split('-')[0]
-        month = departuredate.split('-')[1]
-        date = departuredate.split('-')[2]
-
+    if departure_date:
         from ticket.models.ticketdata import TicketData
         crawler = TwayData()
-        ticket_datas = crawler.get_ticket_information(year=year, month=month, date=date)
+        ticket_datas = crawler.get_ticket_information(departure_date)
 
         for ticket_data in ticket_datas:
             ticket, ticket_created = TicketData.objects.update_or_create(
