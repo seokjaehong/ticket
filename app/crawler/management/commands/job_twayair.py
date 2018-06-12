@@ -11,7 +11,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         from ticket.models.ticketdata import TicketData
 
-        departure_date = date(2018, 7, 6)
+        departure_date = date(2018, 8, 1)
         add_days = 1
         crawler = TwayData()
 
