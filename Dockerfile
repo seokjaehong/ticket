@@ -11,8 +11,8 @@ COPY        . /srv/ticket
 RUN         cp -f   /srv/ticket/.config/${BUILD_MODE}/nginx.conf       /etc/nginx/nginx.conf &&\
             cp -f   /srv/ticket/.config/${BUILD_MODE}/nginx-app.conf   /etc/nginx/sites-available/ &&\
             rm -f   /etc/nginx/sites-enabled/* &&\
-            ln -sf  /etc/nginx/sites-available/nginx-app.conf   /etc/nginx/sites-enabled/
-            cp -f   /srv/ticket/app/cronjob.txt /etc/cron.d/
+            ln -sf  /etc/nginx/sites-available/nginx-app.conf   /etc/nginx/sites-enabled/\
+            cp -f   /srv/ticket/app/cronjob.txt                         /etc/cron.d/
 #supervisord 설정 파일 복사
 
 RUN         cp -f   /srv/ticket/.config/${BUILD_MODE}/supervisord.conf /etc/supervisor/conf.d/
