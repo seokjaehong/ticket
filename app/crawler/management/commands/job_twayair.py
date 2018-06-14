@@ -1,7 +1,9 @@
 from django.core.management import BaseCommand
+from django.utils import timezone
+
 from crawler.twayair import TwayData
 from datetime import timedelta, date
-
+import datetime
 
 class Command(BaseCommand):
     def daterange(self, start_date, end_date):
@@ -12,7 +14,7 @@ class Command(BaseCommand):
         from ticket.models.ticketdata import TicketData
 
         departure_date = date(2018, 9, 1)
-        add_days = 10
+        add_days = 1
         crawler = TwayData()
 
         ticket_data_list = crawler.get_ticket_information(departure_date, add_days)
@@ -36,4 +38,6 @@ class Command(BaseCommand):
                     currency=ticket_data['currency'],
                     data_source=ticket_data['data_source'],
                     leftseat=ticket_data['leftseat'],
+
+                    # modify_datetime=datetime.datetime.now(tz=timezone.utc)
                 )
