@@ -31,6 +31,8 @@
             <th scope="col">출처</th>
             <th>데이터 추출시간 </th>
             <th>잔여 좌석</th>
+{#            <th>데이터 수정시간</th>#}
+
         </tr>
         </thead>
 
@@ -49,6 +51,7 @@
                 <th>{{ ticket.data_source }}</th>
                 <th>{{ ticket.create_datetime }}</th>
                 <th>{{ ticket.leftseat }}</th>
+{#                <th>{{ ticket.modify_datetime }}</th>#}
             </tr>
         {% endfor %}
         </tbody>

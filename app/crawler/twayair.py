@@ -95,8 +95,8 @@ class TwayData():
                 price = int(sub(',', '', ticket.find_element_by_xpath("td[6]/label/span").text))
                 leftseat = ""
 
-                if ticket.find_elements_by_xpath("td[6]/p/em"):
-                    leftseat = ticket.find_element_by_xpath("td[6]/p/em").text
+                # if ticket.find_elements_by_xpath("td[6]/p/em"):
+                #     leftseat = ticket.find_element_by_xpath("td[6]/p/em").text
 
             result.append({
                 'origin_place': 'GMP',
