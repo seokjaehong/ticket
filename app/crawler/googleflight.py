@@ -5,13 +5,22 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 
+<<<<<<< HEAD
+=======
+
+def makeURL(start, arrive, start_date, arrive_date):
+    pass
+
+
+>>>>>>> master
 def checkcity(start, arrive):
     city = dict()
     city['서울'] = 'ICN,GMP'
     city['로마'] = 'FCO,CIA,IRT,XRJ'
     city['피렌체'] = 'FLR,FIR,ZMS'
     city['프라하'] = 'PRG,XYG'
-    return city[start],city[arrive]
+    return city[start], city[arrive]
+
 
 
 start, arrive = checkcity('서울', '피렌체')

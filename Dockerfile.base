@@ -1,0 +1,67 @@
+#docker build -t ec2-deploy.base Dokcerfile.base .
+
+FROM        python:3.6.4-slim
+MAINTAINER  devhsj@gmail.com
+
+
+ENV         LANG C.UTF-8
+
+RUN     apt-get -y update
+RUN     apt-get -y dist-upgrade
+RUN     apt-get -y install build-essential nginx supervisor git
+
+# pyenv
+RUN         apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+xz-utils tk-dev
+RUN         curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+ENV         PATH /root/.pyenv/bin:$PATH
+RUN         pyenv install 3.6.4
+
+# zsh
+RUN         apt-get install -y zsh
+RUN         wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+RUN         chsh -s /usr/bin/zsh
+
+# pyenv settings
+RUN         echo 'export PATH="/root/.pyenv/bin:$PATH"' >> ~/.zshrc
+RUN         echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+RUN         echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
+
+RUN         pyenv virtualenv 3.6.4 ticket
+COPY        . /srv/ticket
+COPY        .requirements /srv/.requirements
+
+WORKDIR /srv/ticket
+RUN     zsh
+RUN     /root/.pyenv/versions/ticket/bin/pip install --upgrade pip
+RUN     /root/.pyenv/versions/ticket/bin/pip install uwsgi
+RUN     apt-get install -y cron
+RUN     /root/.pyenv/versions/ticket/bin/pip install -r /srv/.requirements/production.txt
+
+
+#chrome driver 세팅
+# We need wget to set up the PPA and xvfb to have a virtual screen and unzip to install the Chromedriver
+RUN apt-get install -y wget xvfb unzip
+
+# Set up the Chrome PPA
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+
+# Update the package list and install chrome
+RUN apt-get update -y
+RUN apt-get install -y google-chrome-stable
+
+# Set up Chromedriver Environment variables
+ENV CHROMEDRIVER_VERSION 2.39
+ENV CHROMEDRIVER_DIR /usr/local/bin
+# RUN mkdir $CHROMEDRIVER_DIR
+
+# Download and install Chromedriver
+RUN wget -q --continue -P $CHROMEDRIVER_DIR "http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+RUN unzip $CHROMEDRIVER_DIR/chromedriver* -d $CHROMEDRIVER_DIR
+# Put Chromedriver into the PATH
+
+ENV PATH $CHROMEDRIVER_DIR:$PATH
+
+

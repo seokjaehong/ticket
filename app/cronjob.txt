@@ -1,0 +1,55 @@
+* * * * * export DISPLAY=:0 &&  \
+/home/ubuntu/.pyenv/versions/ticket/bin/python3 \
+/srv/ticket/app/manage.py job_twayair \
+--settings=config.settings.dev > /home/ubuntu/ticket/app/backup.log 2>&1
+
+
+## We need wget to set up the PPA and xvfb to have a virtual screen and unzip to install the Chromedriver
+#RUN apt-get install -y wget xvfb unzip
+#
+## Set up the Chrome PPA
+#RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+#RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+#
+## Update the package list and install chrome
+#RUN apt-get update -y
+#RUN apt-get install -y google-chrome-stable
+#
+## Set up Chromedriver Environment variables
+#ENV CHROMEDRIVER_VERSION 2.19
+#ENV CHROMEDRIVER_DIR /chromedriver
+#RUN mkdir $CHROMEDRIVER_DIR
+#
+## Download and install Chromedriver
+#RUN wget -q --continue -P /chromedriver "http://chromedriver.storage.googleapis.com/2.19/chromedriver_linux64.zip"
+#RUN unzip /chromedriver/chromedriver* -d /chromedriver
+#
+## Put Chromedriver into the PATH
+#ENV PATH /chromedriver:$PATH
+
+
+
+# Install Chrome for Selenium
+RUN curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /chrome.deb
+RUN dpkg -i /chrome.deb || apt-get install -yf
+RUN rm /chrome.deb
+
+# Install chromedriver for Selenium
+RUN curl https://chromedriver.storage.googleapis.com/2.31/chromedriver_linux64.zip -o /usr/local/bin/chromedriver
+RUN chmod +x /usr/local/bin/chromedriver
+
+
+wget -q "https://chromedriver.storage.googleapis.com/2.39/chromedriver_linux64.zip" -O /tmp/chromedriver.zip \
+    && unzip /tmp/chromedriver.zip -d /usr/bin/ \
+    && rm /tmp/chromedriver.zip
+
+
+
+1.wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+2.  apt-get update
+3.  apt-get -f install
+4.apt-get -f install libgconf2-4 libnss3-1d libxss1
+5. dpkg -i --force-depends google-chrome-stable_current_amd64.deb
+ apt-get install -y google-chrome-stable
+
+
