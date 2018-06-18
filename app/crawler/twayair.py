@@ -24,8 +24,8 @@ class TwayData():
     options.add_argument('no-sandbox')
     options.add_argument("disable-setuid-sandbox")
     options.add_argument('disable-dev-shm-usage')
-    options.binary_location = '/chromedriver/chromedriver'
-    driver = webdriver.Chrome('/chromedriver/chromedriver', chrome_options=options)
+    # options.binary_location = 'chromedriver'
+    driver = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)
 
     url = "https://www.twayair.com/main.do#;"
     driver.get(url)
