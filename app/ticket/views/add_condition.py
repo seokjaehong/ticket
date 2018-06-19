@@ -21,9 +21,6 @@ def add_condition(request):
     user_max_price = request.GET.get('user_max_price')
     username = request.GET.get('username')
 
-    print(email)
-    print(request.method)
-
     if request.method=='POST':
         form = MailingListForm(request.POST, request.FILES)
         if form.is_valid():

@@ -14,10 +14,7 @@ def index(request):
     context = {
         'tickets': tickets
     }
-    print(context)
-    # return HttpResponse('Hello')
-    # return render(request,'base_data.html',context)
-    return render(request, 'base_data.html', context)
+    return render(request, 'base.html', context)
 
 
 def serve_media(request, path):
