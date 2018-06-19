@@ -44,7 +44,7 @@ def ticket_search_from_tway(request):
                 data_source=ticket_data['data_source'],
                 leftseat=ticket_data['leftseat'],
             )
-        tickets = TicketData.objects.filter(departure_date=datetime.strptime(departuredate, "%Y-%m-%d"))
+        tickets = TicketData.objects.filter(departure_date=datetime.strptime(departure_date, "%Y-%m-%d"))
 
     context = {'tickets': tickets}
     return render(request, 'ticket/search_from_tway.html', context)

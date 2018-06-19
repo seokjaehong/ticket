@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <!-- artist-add로 링크 -->
+    <ul>
+		{% for mail_list in mail_lists %}
+		<li class="clearfix">
+				<div>
+					<div>{{ mail_list.mail_address }}</div>
+					<div>{{ mail_list.departure_date }}</div>
+					<div>{{ mail_list.username }}</div>
+					<div>{{ mail_list.user_max_price }}</div>
+				</div>
+		</li>
+		{% endfor %}    </ul>
+</div>
+{% endblock %}
+
+
