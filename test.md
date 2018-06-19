@@ -54,7 +54,6 @@ python manage.py runserver --settings=config.settings.local
 ```
 ### Dev environment
 ```
-expose DJANGO_SETTINGS_MODULE=config.settings.dev
 pip install -r .requirements/dev.txt
 python manage.py runserver --settings=config.settings.dev
 ```
@@ -64,7 +63,7 @@ pip install -r .requirements/production.txt
 python manage.py runserver --settings=config.settings.production
 ```
 
-## 6.Installation(Docker)
+## 7.Installation(Docker)
 ### Dockerfile.base 
 ```
 install and setting pyenv 3.6.4, zsh, chromedriver=2.39 for selenium
@@ -81,12 +80,12 @@ docker push <Username>/<DockerhubName>:base
 docker build -t eb-docker -f Dockerfile .
 ```
 
-## 7. ETC
+## ETC
 ### .config 
 ```
 cronjob 
 ```
-## Secrets
+### Secrets
 `.secrets/base.json`
 ```json
 "SECRET_KEY": "<Django settings SECRET_KEY value>"
@@ -104,7 +103,6 @@ cronjob
   "AWS_S3_SIGNATURE_VERSION":"<version>, default: s3v4",
   "AWS_DEFAULT_ACL":"private",
 ```
-`.secrets/local.json`
 `.secrets/dev.json & .secrets/production.json`
 ```json
 {

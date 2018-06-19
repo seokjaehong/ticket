@@ -68,12 +68,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'raven.contrib.django.raven_compat',
+
     'crawler',
+    'django_extensions',
     'members',
+    'raven.contrib.django.raven_compat',
+    'photos',
+
     'storages',
     'ticket',
-    'photos',
 ]
 AUTH_USER_MODEL = 'members.User'
 
