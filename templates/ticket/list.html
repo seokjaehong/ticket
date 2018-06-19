@@ -1,19 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-<div>
-    <!-- artist-add로 링크 -->
-    <ul>
-		{% for mail_list in mail_lists %}
-		<li class="clearfix">
-				<div>
-					<div>{{ mail_list.mail_address }}</div>
-					<div>{{ mail_list.departure_date }}</div>
-					<div>{{ mail_list.username }}</div>
-					<div>{{ mail_list.user_max_price }}</div>
-				</div>
-		</li>
-		{% endfor %}    </ul>
-</div>
+    <div>
+        <!-- artist-add로 링크 -->
+        <table class="table" border="1">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">mail주소</th>
+                <th scope="col">출발날짜</th>
+                <th scope="col">유저명</th>
+                <th scope="col">가격</th>
+                <th scope="col">출발도시</th>
+                <th scope="col">도착도시</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for mail_list in mail_lists %}
+                <tr>
+                    <th>{{ mail_list.mail_address }}</th>
+                    <th>{{ mail_list.departure_date }}</th>
+                    <th>{{ mail_list.username }}</th>
+                    <th>{{ mail_list.user_max_price }}</th>
+                    <th>{{ mail_list.origin_place }}</th>
+                    <th>{{ mail_list.destination_place }}</th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
 
 

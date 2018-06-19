@@ -6,7 +6,7 @@
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div>
-            <h3>받는사람 email 주소 </h3>
+            <h3> email 주소 </h3>
             <input type="text" name="mail_address" id="mail_address">
         </div>
         <div>
@@ -21,6 +21,14 @@
         <div>
             <h3>가격</h3>
             <input type="text" name="user_max_price" id="user_max_price">
+        </div>
+        <div>
+            <h3>출발도시 </h3>
+            <input type="text" name="origin_place" id="origin_place">
+        </div>
+        <div>
+            <h3>도착도시</h3>
+            <input type="text" name="destination_place" id="destination_place">
         </div>
         <button type="submit"> 저장</button>
     </form>
