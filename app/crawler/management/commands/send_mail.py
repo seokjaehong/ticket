@@ -10,8 +10,9 @@ class Command(BaseCommand):
         from ticket.models.ticketdata import TicketData
         from ticket.models.mail_condition import MailCondition
 
-        mailing_list = MailCondition.objects.all()
-
+        mailing_lists = MailCondition.objects.all()
+        for mailing_list in mailing_lists:
+            TicketData.objects.filter(origin_place=mailing_list.origin_place).filter(destination_place=mailing_list.destination_place)
 
 
 
