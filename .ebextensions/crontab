@@ -1,1 +1,0 @@
-* /1 * * * * export DISPLAY=:0 && /root/.pyenv/versions/ticket/bin/python /srv/ticket/app/manage.py job_twayair --settings=config.settings.production > /var/log/cron.log 2>&1
