@@ -4,5 +4,5 @@
 # docker push
 
 #2. eb-deploy시 .secrets폴더를 stage영역에 추가한 후 작업완료 후 삭제
-git add -f .secrets && eb deploy --staged --profile=eb; git reset HEAD .secrets
+git add -f .secrets && eb deploy --staged --profile=EB_User; git reset HEAD .secrets
 
