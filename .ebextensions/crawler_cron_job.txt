@@ -1,1 +1,0 @@
-*/10 * * * * sudo docker exec `sudo docker ps -q` /root/.pyenv/versions/ticket/bin/python /srv/ticket/app/manage.py job_twayair --settings=config.settings.production
