@@ -6,10 +6,6 @@ from datetime import timedelta, date
 import datetime
 
 class Command(BaseCommand):
-    # def daterange(self, start_date, end_date):
-    #     for n in range(int((end_date - start_date).days)):
-    #         yield start_date + timedelta(n)
-
     def handle(self, *args, **options):
         from ticket.models.ticketdata import TicketData
 

@@ -104,7 +104,7 @@ class TwayData():
             result.append({
                 'origin_place': 'GMP',
                 'destination_place': 'CJU',
-                'is_direct': True,
+                'is_direct': False,
                 'way_point': 'None',
                 'way_point_duration': 'None',
                 'ticket_price': price,

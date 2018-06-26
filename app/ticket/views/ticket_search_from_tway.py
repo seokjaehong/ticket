@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 
 from django.shortcuts import render
 
@@ -18,33 +18,40 @@ def ticket_search_from_tway(request):
     :return:
     """
     departure_date = request.GET.get('departure_date')
+    print(departure_date)
     tickets = []
 
     if departure_date:
         from ticket.models.ticketdata import TicketData
         crawler = TwayData()
-        ticket_datas = crawler.get_ticket_information(departure_date)
 
-        for ticket_data in ticket_datas:
-            ticket, ticket_created = TicketData.objects.update_or_create(
-                origin_place=ticket_data['origin_place'],
-                destination_place=ticket_data['destination_place'],
-                is_direct=ticket_data['is_direct'],
-                way_point=ticket_data['way_point'],
-                way_point_duration=ticket_data['way_point_duration'],
-                ticket_price=ticket_data['ticket_price'],
+        datetime_departure_date = datetime.date(*(int(s) for s in departure_date.split('-')))
+        ticket_data_list = crawler.get_ticket_information(datetime_departure_date,add_days=1)
 
-                departure_date=ticket_data['departure_date'],
-                departure_datetime=ticket_data['departure_datetime'],
-                arrival_date=ticket_data['arrival_date'],
-                arrival_datetime=ticket_data['arrival_datetime'],
-                flight_time=ticket_data['flight_time'],
-                flight_company=ticket_data['flight_company'],
-                currency=ticket_data['currency'],
-                data_source=ticket_data['data_source'],
-                leftseat=ticket_data['leftseat'],
-            )
-        tickets = TicketData.objects.filter(departure_date=datetime.strptime(departure_date, "%Y-%m-%d"))
+        for single_ticket_data in ticket_data_list:
+            for ticket_data in single_ticket_data:
+                ticket, _ = TicketData.objects.update_or_create(
+                    origin_place=ticket_data['origin_place'],
+                    destination_place=ticket_data['destination_place'],
+                    is_direct=ticket_data['is_direct'],
+                    way_point=ticket_data['way_point'],
+                    way_point_duration=ticket_data['way_point_duration'],
+                    ticket_price=ticket_data['ticket_price'],
+
+                    departure_date=ticket_data['departure_date'],
+                    departure_datetime=ticket_data['departure_datetime'],
+                    arrival_date=ticket_data['arrival_date'],
+                    arrival_datetime=ticket_data['arrival_datetime'],
+                    flight_time=ticket_data['flight_time'],
+                    flight_company=ticket_data['flight_company'],
+                    currency=ticket_data['currency'],
+                    data_source=ticket_data['data_source'],
+                    leftseat=ticket_data['leftseat'],
+
+                    # modify_datetime=datetime.datetime.now(tz=timezone.utc)
+                )
+
+        tickets = TicketData.objects.filter(departure_date=datetime.datetime.strptime(departure_date, "%Y-%m-%d"))
 
     context = {'tickets': tickets}
     return render(request, 'ticket/search_from_tway.html', context)

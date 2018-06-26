@@ -70,7 +70,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'crawler',
-    'django_extensions',
     'members',
     'raven.contrib.django.raven_compat',
     'photos',
