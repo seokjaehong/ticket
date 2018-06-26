@@ -14,7 +14,7 @@ class Command(BaseCommand):
         from ticket.models.ticketdata import TicketData
 
         departure_date = date(2018, 8, 1)
-        add_days = 1
+        add_days = 10
         crawler = TwayData()
 
         ticket_data_list = crawler.get_ticket_information(departure_date, add_days)
