@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 
-from ticket.forms import MailingListForm
+from mail.forms import MailingListForm
 
 __all__ = (
-    'add_condition',
+    'add_mailing',
 )
 
 
-def add_condition(request):
+def add_mailing(request):
     """
      Template: ticket/add.html
         form (email, departure_date, price를 받아서 저장)

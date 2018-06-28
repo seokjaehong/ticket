@@ -27,10 +27,6 @@ class TwayData():
     # options.binary_location = 'chromedriver'
     driver = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)
 
-    url = "https://www.twayair.com/main.do#;"
-    driver.get(url)
-    driver.implicitly_wait(3)
-
     def __init__(self):
         self.origin_place = None
         self.destination_place = None
@@ -101,27 +97,32 @@ class TwayData():
                 # if ticket.find_elements_by_xpath("td[6]/p/em"):
                 #     leftseat = ticket.find_element_by_xpath("td[6]/p/em").text
 
-            result.append({
-                'origin_place': 'GMP',
-                'destination_place': 'CJU',
-                'is_direct': False,
-                'way_point': 'None',
-                'way_point_duration': 'None',
-                'ticket_price': price,
-                'departure_date': new_departure_date,
-                'departure_datetime': departure_datetime,
-                'arrival_date': new_departure_date,
-                'arrival_datetime': arrival_datetime,
-                'flight_time': flight_time,
-                'flight_company': 'tway',
-                'currency': 'KRW',
-                'data_source': 'tway',
-                'leftseat': leftseat,
+                result.append({
+                    'origin_place': 'GMP',
+                    'destination_place': 'CJU',
+                    'is_direct': False,
+                    'way_point': 'None',
+                    'way_point_duration': 'None',
+                    'ticket_price': price,
+                    'departure_date': new_departure_date,
+                    'departure_datetime': departure_datetime,
+                    'arrival_date': new_departure_date,
+                    'arrival_datetime': arrival_datetime,
+                    'flight_time': flight_time,
+                    'flight_company': 'tway',
+                    'currency': 'KRW',
+                    'data_source': 'tway',
+                    'leftseat': leftseat,
 
-            })
+                })
         return result
 
     def get_ticket_information(self, departure_date, add_days):
+
+        url = "https://www.twayair.com/main.do#;"
+        self.driver.get(url)
+        self.driver.implicitly_wait(3)
+
         str_departure_date = str(departure_date)
         year = str_departure_date.split('-')[0]
         month = str_departure_date.split('-')[1]

@@ -25,5 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('ticket/', include('ticket.urls')),
-    # re_path(r'media/(?P<path>.*)$', serve_media),
+    path('mail/', include('mail.urls')),
 ]+ static(settings.base.MEDIA_URL, document_root=settings.base.MEDIA_ROOT)
