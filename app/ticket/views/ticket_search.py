@@ -20,9 +20,9 @@ def ticket_search(request):
     :return:
     """
 
-    departuredate = request.GET.get('departuredate')
+    departure_date = request.GET.get('departuredate')
     tickets = []
-    if departuredate:
-        tickets = TicketData.objects.filter(departure_date=datetime.strptime(departuredate, "%Y-%m-%d"))
+    if departure_date:
+        tickets = TicketData.objects.filter(departure_date=datetime.strptime(departure_date, "%Y-%m-%d"))
     context = {'tickets': tickets}
     return render(request, 'ticket/search.html', context)

@@ -16,18 +16,14 @@ def add_mailing(request):
     :param request:
     :return:
     """
-    email = request.GET.get('email')
-    departure_date = request.GET.get('departure_date')
-    user_max_price = request.GET.get('user_max_price')
-    username = request.GET.get('username')
-
     if request.method=='POST':
         form = MailingListForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('ticket:list-condition')
+            return redirect('mail:list-mailing')
     else:
         form = MailingListForm()
+
     context = {
         'form':form,
 

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2> Ticket List </h2>
+    <div class="mail-body">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div>
+                <h3>제목</h3>
+            </div>
+            <div>
+                <h3>내용</h3>
+                <table>
+                    <tbody>
+                    {% for ticket in contents_price_list %}
+                        <tr>
+                            <th>{{ ticket.departure_date }}</th>
+                            <th>{{ ticket.departure_datetime }}</th>
+                            <th>{{ ticket.arrival_date }}</th>
+                            <th>{{ ticket.arrival_datetime }}</th>
+                            <th>{{ ticket.flight_time }}</th>
+                            <th>{{ ticket.origin_place }}</th>
+                            <th>{{ ticket.destination_place }}</th>
+                            <th>{{ ticket.flight_company }}</th>
+                            <th>{{ ticket.ticket_price }}</th>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+{% endblock %}

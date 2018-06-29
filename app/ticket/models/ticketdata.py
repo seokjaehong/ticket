@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import get_object_or_404
 
 __all__ = (
     'TicketData',
@@ -32,3 +33,11 @@ class TicketData(models.Model):
     create_datetime = models.DateTimeField('생성시간', auto_now_add=True)
     modify_datetime = models.DateTimeField('수정시간', auto_now_add=True)
     description = models.CharField('설명', max_length=200, blank=True, null=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return '(%s) %s, %s : %s' % (self.pk,self.departure_date, self.departure_datetime, self.ticket_price)
+
+    class Meta:
+        ordering =('departure_date','departure_datetime',)

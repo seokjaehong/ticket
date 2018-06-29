@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 from django.db import models
 
+from ticket.models.ticketdata import TicketData
+
 __all__ = (
     'Receiver',
 )
@@ -16,5 +18,10 @@ class Receiver(models.Model):
     origin_place = models.CharField('출발도시', max_length=50)
     destination_place = models.CharField('도착도시', max_length=50)
     user_max_price = models.IntegerField('최대가격')
+    ticket = models.ManyToManyField(TicketData)
+
+    class Meta:
+        ordering =('departure_date',)
+
 
 
