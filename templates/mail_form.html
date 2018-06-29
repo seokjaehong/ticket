@@ -1,32 +1,39 @@
-{% extends 'base.html' %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
 
-{% block content %}
     <h2> Ticket List </h2>
     <div class="mail-body">
-        <form action="" method="POST" enctype="multipart/form-data">
-            <div>
-                <h3>제목</h3>
-            </div>
-            <div>
-                <h3>내용</h3>
-                <table>
-                    <tbody>
-                    {% for ticket in contents_price_list %}
-                        <tr>
-                            <th>{{ ticket.departure_date }}</th>
-                            <th>{{ ticket.departure_datetime }}</th>
-                            <th>{{ ticket.arrival_date }}</th>
-                            <th>{{ ticket.arrival_datetime }}</th>
-                            <th>{{ ticket.flight_time }}</th>
-                            <th>{{ ticket.origin_place }}</th>
-                            <th>{{ ticket.destination_place }}</th>
-                            <th>{{ ticket.flight_company }}</th>
-                            <th>{{ ticket.ticket_price }}</th>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </form>
+        <table class="table" border="1">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">mail주소</th>
+                <th scope="col">출발날짜</th>
+                <th scope="col">출발시간</th>
+                <th scope="col">유저가격</th>
+                <th scope="col">가격</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for price_list in price_lists %}
+                <tr>
+                    <th>{{ price_list.mail_address }}</th>
+                    <th>{{ price_list.departure_date }}</th>
+                    <th>{{ price_list.departure_datetime }}</th>
+                    <th>{{ price_list.user_max_price }}</th>
+                    <th>{{ price_list.ticket_price }}</th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-{% endblock %}
+
+</body>
+</html>
