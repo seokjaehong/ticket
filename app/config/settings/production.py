@@ -4,9 +4,6 @@ secrets = json.loads(open(SECRETS_PRODUCTION, 'rt').read())
 
 DEBUG = False
 ALLOWED_HOSTS = [
-    # 'localhost',
-    'localhost',
-    '127.0.0.1',
     '.elasticbeanstalk.com',
     # 'amazonaws.com',
 ]
