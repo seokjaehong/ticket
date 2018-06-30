@@ -2,7 +2,7 @@ from .base import *
 
 secrets = json.loads(open(SECRETS_PRODUCTION, 'rt').read())
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = [
     '.elasticbeanstalk.com',
     # 'amazonaws.com',
