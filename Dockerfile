@@ -5,6 +5,7 @@ MAINTAINER  devhsj@gmail.com
 ENV         BUILD_MODE              production
 ENV         DJANGO_SETTINGS_MODULE  config.settings.${BUILD_MODE}
 
+RUN         rm -rf /srv/ticket
 COPY        . /srv/ticket
 
 #Nginx 설정파일 복사 및 링크

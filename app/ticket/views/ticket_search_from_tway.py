@@ -25,14 +25,14 @@ def ticket_search_from_tway(request):
         from ticket.models.ticketdata import TicketData
         crawler = TwayData()
 
-        TicketData.objects.all().delete()
+        # TicketData.objects.all().delete()
 
         datetime_departure_date = datetime.date(*(int(s) for s in departure_date.split('-')))
-        ticket_data_list = crawler.get_ticket_information(datetime_departure_date,add_days=30)
+        ticket_data_list = crawler.get_ticket_information(datetime_departure_date,add_days=10)
 
         for single_ticket_data in ticket_data_list:
             for ticket_data in single_ticket_data:
-                obj, created = TicketData.objects.get_or_create(
+                obj, updated = TicketData.objects.update_or_create(
                     origin_place=ticket_data['origin_place'],
                     destination_place=ticket_data['destination_place'],
                     is_direct=ticket_data['is_direct'],
