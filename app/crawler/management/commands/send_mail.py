@@ -1,11 +1,6 @@
 from django.core.mail import EmailMessage
 from django.core.management import BaseCommand
 from django.template.loader import render_to_string
-from django.utils import timezone
-
-from crawler.twayair import TwayData
-from datetime import timedelta, date
-import datetime
 
 from ticket.models.ticketdata import TicketData
 from mail.models import Receiver

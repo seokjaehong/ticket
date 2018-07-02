@@ -16,16 +16,16 @@ def add_mailing(request):
     :param request:
     :return:
     """
-    if request.method=='POST':
+    if request.method == 'POST':
         form = MailingListForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('mail:list-mailing')
+            return redirect('mail:mail-list')
     else:
         form = MailingListForm()
 
     context = {
-        'form':form,
+        'form': form,
 
     }
-    return render(request,'ticket/add.html',context)
+    return render(request, 'ticket/add.html', context)
