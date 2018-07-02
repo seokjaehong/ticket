@@ -19,16 +19,15 @@ def ticket_search_from_tway(request):
     """
     departure_date = request.GET.get('departure_date')
     print(departure_date)
+    add_days = 10
     tickets = []
 
     if departure_date:
         from ticket.models.ticketdata import TicketData
         crawler = TwayData()
 
-        # TicketData.objects.all().delete()
-
         datetime_departure_date = datetime.date(*(int(s) for s in departure_date.split('-')))
-        ticket_data_list = crawler.get_ticket_information(datetime_departure_date,add_days=10)
+        ticket_data_list = crawler.get_ticket_information(datetime_departure_date, add_days=add_days)
 
         for single_ticket_data in ticket_data_list:
             for ticket_data in single_ticket_data:
