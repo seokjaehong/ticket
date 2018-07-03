@@ -9,6 +9,7 @@ class Command(BaseCommand):
 
         departure_date = date.today()
         add_days = 30
+
         crawler = JejuData()
 
         TicketData.objects.all().delete()
