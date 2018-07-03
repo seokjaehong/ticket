@@ -21,7 +21,7 @@ def list_mailing(request):
 
     if request.method == "POST":
         to_mail_address = request.POST['mail_address']
-        price_lists=[]
+        price_lists = []
         try:
             receiver_list = Receiver.objects.filter(mail_address=to_mail_address).prefetch_related('ticket')
             for receiver in receiver_list:

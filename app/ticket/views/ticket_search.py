@@ -20,7 +20,7 @@ def ticket_search(request):
     :return:
     """
 
-    departure_date = request.GET.get('departuredate')
+    departure_date = request.GET.get('departure_date')
     tickets = []
     if departure_date:
         tickets = TicketData.objects.filter(departure_date=datetime.strptime(departure_date, "%Y-%m-%d"))

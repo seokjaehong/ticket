@@ -10,6 +10,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import time
 
+from crawler.utils import clear_cache
+
 __all__ = (
     'TwayData',
 )
@@ -75,7 +77,7 @@ class TwayData():
         for n in range(int((end_date - start_date).days)):
             yield start_date + timedelta(n)
 
-    def get_ticket_detail(self, single_date):
+    def get_ticket_detail(self, single_date, origin_place,destination_place):
         self.driver.implicitly_wait(3)
 
         departure_date = self.driver.find_element_by_xpath("//*[@id='divSelectByDate']/div/div/ul[2]/li[1]/a").text
@@ -98,8 +100,8 @@ class TwayData():
                 #     leftseat = ticket.find_element_by_xpath("td[6]/p/em").text
 
                 result.append({
-                    'origin_place': 'GMP',
-                    'destination_place': 'CJU',
+                    'origin_place': origin_place,
+                    'destination_place': destination_place,
                     'is_direct': False,
                     'way_point': 'None',
                     'way_point_duration': 'None',
@@ -117,7 +119,7 @@ class TwayData():
                 })
         return result
 
-    def get_ticket_information(self, departure_date, add_days):
+    def get_ticket_information(self, origin_place=None, destination_place=None, departure_date=None, add_days=None):
 
         url = "https://www.twayair.com/main.do#;"
         self.driver.get(url)
@@ -139,7 +141,9 @@ class TwayData():
             "//*[@id='header']/div[3]/div[2]/ul/li[1]/form/fieldset/div/ul/li[2]/label").click()
         # 노선선택
         flight_informations.find_element_by_xpath("li[1]/a").click()
-        # 김포제주
+
+        if origin_place == "GMP" and destination_place == "CJU":
+            flight_informations.find_element_by_xpath("li[1]/section/div/dl[1]/dt/a/span").click()
         flight_informations.find_element_by_xpath("li[1]/section/div/dl[1]/dd[1]/a").click()
 
         # 가는날짜, 사람수 선택, 확인버튼 클릭
@@ -166,7 +170,8 @@ class TwayData():
 
         for single_date in self.daterange(departure_date, end_date):
             print('single_date:', single_date)
-            single_result = self.get_ticket_detail(single_date)
+            single_result = self.get_ticket_detail(single_date,origin_place,destination_place)
+
             result.append(single_result)
             global next_day_box
             next_day_box = self.driver.find_element_by_xpath("//*[@id='resultbox1']/div[2]/ul/li[5]/a")
@@ -175,5 +180,6 @@ class TwayData():
             print("---(single day)crawler %s seconds ---" % (time.time() - self.start_time))
 
         print("---(total day)crawler %s seconds ---" % (time.time() - self.start_time))
+
         self.driver.close()
         return result

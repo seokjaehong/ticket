@@ -2,6 +2,7 @@ from django.core.management import BaseCommand
 from crawler.twayair import TwayData
 from datetime import date
 
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         from ticket.models.ticketdata import TicketData
@@ -12,7 +13,8 @@ class Command(BaseCommand):
 
         TicketData.objects.all().delete()
 
-        ticket_data_list = crawler.get_ticket_information(departure_date, add_days)
+        ticket_data_list = crawler.get_ticket_information(origin_place="GMP", destination_place="CJU",
+                                                          departure_date=departure_date, add_days=add_days)
 
         for single_ticket_data in ticket_data_list:
             for ticket_data in single_ticket_data:
