@@ -1,5 +1,5 @@
 from django.core.management import BaseCommand
-from crawler.twayair import TwayData
+from crawler.jeju import JejuData
 from datetime import date
 
 
@@ -9,12 +9,15 @@ class Command(BaseCommand):
 
         departure_date = date.today()
         add_days = 30
-        crawler = TwayData()
+        crawler = JejuData()
 
         TicketData.objects.all().delete()
 
         ticket_data_list = crawler.get_ticket_information(origin_place="GMP", destination_place="CJU",
                                                           departure_date=departure_date, add_days=add_days)
+        ticket_data_list2 = crawler.get_ticket_information(origin_place="CJU", destination_place="GMP",
+                                                           departure_date=departure_date, add_days=add_days)
+        ticket_data_list=ticket_data_list+ticket_data_list2
 
         for single_ticket_data in ticket_data_list:
             for ticket_data in single_ticket_data:

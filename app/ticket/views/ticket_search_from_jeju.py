@@ -2,31 +2,25 @@ import datetime
 
 from django.shortcuts import render
 
-from crawler.twayair import TwayData
+from crawler.jeju import JejuData
 
 __all__ = (
-    'ticket_search_from_tway',
+    'ticket_search_from_jeju',
 )
 
 
-def ticket_search_from_tway(request):
-    """
-     Template: ticket/ticket_search.html
-        form (input[departure_date], 조회 button 한 개)
-    1. form에 주어진 'departure date'로 tway항공에 대한 검색 결과를 저장하고 리스트를 전달
-    :param request:
-    :return:
-    """
+def ticket_search_from_jeju(request):
     departure_date = request.GET.get('departure_date')
-    origin_place = request.GET.get('origin_place')
-    destination_place = request.GET.get('destination_place')
-    print(departure_date)
-    add_days = 1
+    air_route = str(request.GET.get('air_route'))
+    origin_place = air_route[:3]
+    destination_place = air_route[4:]
+
+    add_days = 2
     tickets = []
 
     if departure_date:
         from ticket.models.ticketdata import TicketData
-        crawler = TwayData()
+        crawler = JejuData()
 
         datetime_departure_date = datetime.date(*(int(s) for s in departure_date.split('-')))
         ticket_data_list = crawler.get_ticket_information(origin_place, destination_place, datetime_departure_date,
@@ -34,6 +28,7 @@ def ticket_search_from_tway(request):
 
         for single_ticket_data in ticket_data_list:
             for ticket_data in single_ticket_data:
+
                 obj, updated = TicketData.objects.update_or_create(
                     origin_place=ticket_data['origin_place'],
                     destination_place=ticket_data['destination_place'],

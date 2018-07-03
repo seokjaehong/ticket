@@ -2,19 +2,14 @@
 
 {% block content %}
     <div>
-        <h3>tway에서 항공권 검색</h3>
+        <h3>web에서 항공권 검색</h3>
         <form action="">
             <input type="text" name="departure_date" placeholder="출발일">
             <div>
-                <h3>출발도시 </h3>
-                <select name="origin_place" id="origin_place">
-                    <option value="GMP">김포</option>
-                    <option value="CJU">제주</option>
-                </select>
-                <h3>도착도시</h3>
-                <select name="destination_place" id="destination_place">
-                    <option value="CJU">제주</option>
-                    <option value="GMP">김포</option>
+                <h3>노선선택 </h3>
+                <select name="air_route" id="air_route">
+                    <option value="GMP_CJU">김포-제주</option>
+                    <option value="CJU_GMP">제주-김포</option>
                 </select>
             </div>
             <button type="submit">검색</button>

@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import time
 
-from crawler.utils import clear_cache
+from crawler.utils import clear_cache, daterange
 
 __all__ = (
     'TwayData',
@@ -73,11 +73,7 @@ class TwayData():
                 dates.click()
                 break
 
-    def daterange(self, start_date, end_date):
-        for n in range(int((end_date - start_date).days)):
-            yield start_date + timedelta(n)
-
-    def get_ticket_detail(self, single_date, origin_place,destination_place):
+    def get_ticket_detail(self, single_date, origin_place, destination_place):
         self.driver.implicitly_wait(3)
 
         departure_date = self.driver.find_element_by_xpath("//*[@id='divSelectByDate']/div/div/ul[2]/li[1]/a").text
@@ -168,9 +164,9 @@ class TwayData():
         result = []
         wait = WebDriverWait(self.driver, 5)
 
-        for single_date in self.daterange(departure_date, end_date):
+        for single_date in daterange(departure_date, end_date):
             print('single_date:', single_date)
-            single_result = self.get_ticket_detail(single_date,origin_place,destination_place)
+            single_result = self.get_ticket_detail(single_date, origin_place, destination_place)
 
             result.append(single_result)
             global next_day_box
