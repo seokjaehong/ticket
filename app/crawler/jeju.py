@@ -41,7 +41,12 @@ class JejuData():
             departure_datetime = flight_information.get_attribute("dep_time_str")
             arrival_datetime = flight_information.get_attribute("arr_time_str")
             leftseat = flight_information.get_attribute("no_of_avail_seat")
-            ticket_price = int(flight_information.get_attribute("price"))
+
+            if flight_information.get_attribute("price")!="":
+               ticket_price = int(flight_information.get_attribute("price"))
+            else:
+                ticket_price=0
+
             flight_time = flight_information.get_attribute("term")
 
             result.append({
