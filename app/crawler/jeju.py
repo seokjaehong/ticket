@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from crawler.utils import daterange
 
-from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
+from selenium.common.exceptions import  NoSuchElementException
 from selenium.common.exceptions import TimeoutException
 
 __all__ = (
