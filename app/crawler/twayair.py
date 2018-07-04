@@ -171,6 +171,7 @@ class TwayData():
             result.append(single_result)
             global next_day_box
             next_day_box = self.driver.find_element_by_xpath("//*[@id='resultbox1']/div[2]/ul/li[5]/a")
+            
             next_day_box.click()
             wait.until(EC.staleness_of(next_day_box))
             print("---(single day)crawler %s seconds ---" % (time.time() - self.start_time))

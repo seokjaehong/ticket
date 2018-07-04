@@ -1,6 +1,9 @@
 from datetime import timedelta
 
+from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
+
+from selenium.webdriver.support import expected_conditions as EC
 
 
 def get_clear_browsing_button(driver):
@@ -27,3 +30,4 @@ def clear_cache(driver, timeout=60):
 def daterange(start_date, end_date):
     for n in range(int((end_date - start_date).days)):
         yield start_date + timedelta(n)
+"
