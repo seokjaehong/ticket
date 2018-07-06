@@ -38,7 +38,7 @@ class JejuData():
         result = list()
         flight_information_list = driver.find_elements_by_xpath("//*[@id='tableDepList']/tbody/tr")
         for flight_information in flight_information_list:
-            print(flight_information.text)
+            # print(flight_information.text)
             if flight_information.text != "매진\n국내 7개 항공사의 모든 항공권이 매진되었습니다.\n다른 날짜를 선택해주세요.":
                 flight_company = flight_information.get_attribute("car_desc")
                 departure_datetime = flight_information.get_attribute("dep_time_str")
@@ -119,7 +119,7 @@ class JejuData():
             except TimeoutException:
                 print("Loading took too much time!")
 
-            print("---(single day)crawler %s seconds ---" % (time.time() - start_time))
+            # print("---(single day)crawler %s seconds ---" % (time.time() - start_time))
 
         print("---(total day)crawler %s seconds ---" % (time.time() - start_time))
 

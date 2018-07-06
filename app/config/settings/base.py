@@ -40,6 +40,9 @@ SECRETS_PRODUCTION = os.path.join(SECRETS_DIR, 'production.json')
 SECRETS = json.loads(open(SECRETS_BASE, 'rt').read())
 TEMPLATE_DIR = os.path.join(ROOT_DIR, 'templates')
 
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
 
 AWS_ACCESS_KEY_ID = SECRETS['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = SECRETS['AWS_SECRET_ACCESS_KEY']

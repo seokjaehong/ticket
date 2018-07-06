@@ -33,12 +33,12 @@ class Command(BaseCommand):
             context = {
                 'price_lists': price_lists
             }
+            if not context:
+                contents = render_to_string('mail_form.html', context)
 
-            contents = render_to_string('mail_form.html', context)
-
-            msg = EmailMessage(subject='Ticket-List',
-                               body=contents,
-                               to=[receiver.mail_address],
-                               from_email='hsj2334@gmail.com')
-            msg.content_subtype = "html"
-            msg.send()
+                msg = EmailMessage(subject='Ticket-List',
+                                   body=contents,
+                                   to=[receiver.mail_address],
+                                   from_email='hsj2334@gmail.com')
+                msg.content_subtype = "html"
+                msg.send()
