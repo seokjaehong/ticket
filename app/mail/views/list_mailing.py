@@ -22,7 +22,7 @@ def list_mailing(request):
     if request.method == "POST":
         to_mail_address = request.POST['mail_address']
         price_lists = []
-        try:
+        if to_mail_address:
             receiver_list = Receiver.objects.filter(mail_address=to_mail_address).prefetch_related('ticket')
             for receiver in receiver_list:
 
@@ -47,9 +47,23 @@ def list_mailing(request):
                 context = {
                     'price_lists': price_lists
                 }
+        else:
+            receiver_list=Receiver.objects.all()
+            # for receiver in receiver_list:
+            #     price_lists.append({
+            #         'mail_address': receiver.mail_address,
+            #         'user_max_price': receiver.user_max_price,
+            #         'origin_place': receiver.origin_place,
+            #         'destination_place': receiver.destination_place,
+            #         'departure_date': receiver.tickets.departure_date,
+            #         'departure_datetime': receiver.tickets.departure_datetime,
+            #         'ticket_price': receiver.tickets.ticket_price
+            #     })
+            return render(request,'ticket/list.html',context={'price_lists':receiver_list})
 
-        except Receiver.DoesNotExist as e:
-            return redirect('mail:mail-list')
+
+        # except Receiver.DoesNotExist as e:
+        #     return redirect('mail:mail-list')
 
         if 'send_mail' in request.POST:
             contents = render_to_string('mail_form.html', context)

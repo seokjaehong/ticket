@@ -18,10 +18,11 @@ class Receiver(models.Model):
     origin_place = models.CharField('출발도시', max_length=50)
     destination_place = models.CharField('도착도시', max_length=50)
     user_max_price = models.IntegerField('최대가격')
-    ticket = models.ManyToManyField(TicketData)
+    tickets = models.ManyToManyField(TicketData)
+
+    def __str__(self):
+        return '(%s) %s, (%s) %s - %s: %s' % (
+        self.pk, self.mail_address, self.departure_date, self.origin_place, self.destination_place, self.user_max_price)
 
     class Meta:
-        ordering =('departure_date',)
-
-
-
+        ordering = ('departure_date',)
