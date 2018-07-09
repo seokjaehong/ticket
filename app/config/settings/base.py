@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'crawler',
     'members',
     'raven.contrib.django.raven_compat',
+    'django_extensions',
 
     'storages',
     'ticket',
