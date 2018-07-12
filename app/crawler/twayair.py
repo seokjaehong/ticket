@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import time
 
-from crawler.utils import clear_cache, daterange
+from crawler.utils import daterange
 
 __all__ = (
     'TwayData',

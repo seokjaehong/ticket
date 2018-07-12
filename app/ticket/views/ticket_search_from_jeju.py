@@ -15,7 +15,7 @@ def ticket_search_from_jeju(request):
     origin_place = air_route[:3]
     destination_place = air_route[4:]
 
-    add_days = 2
+    add_days = 1
     tickets = []
 
     if departure_date:

@@ -9,7 +9,6 @@ from mail.models import Receiver
 class Command(BaseCommand):
     def handle(self, *args, **options):
         receiver_list = Receiver.objects.all()
-
         for receiver in receiver_list:
             ticket_query_set = TicketData.objects.filter(
                 destination_place=receiver.destination_place,
@@ -29,13 +28,11 @@ class Command(BaseCommand):
                     'departure_datetime': ticket.departure_datetime,
                     'ticket_price': ticket.ticket_price
                 })
-
             context = {
                 'price_lists': price_lists
             }
             if not context:
                 contents = render_to_string('mail_form.html', context)
-
                 msg = EmailMessage(subject='Ticket-List',
                                    body=contents,
                                    to=[receiver.mail_address],
