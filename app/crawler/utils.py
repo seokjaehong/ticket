@@ -27,8 +27,10 @@ def parser_raw_value_to_datefield(raw_value):
     departure_date = datetime.date(*(int(s) for s in departure_date_string.split('-')))
     return departure_date
 
+
 def generator_rand_num():
-    return random.randrange(1,10)
+    return random.randrange(0, 10)
+
 
 def get_ticket_information_single_date(origin_place, destination_place, departure_date, flight_company):
     """
@@ -42,9 +44,8 @@ def get_ticket_information_single_date(origin_place, destination_place, departur
     :return:
     """
 
-    start_time = time.time()
-    print(flight_company)
-    url = "http://air" + str(generator_rand_num()) + ".jeju.com/item/ajax/ajax.air_search_v3.php" \
+    url = "http://air" + str(generator_rand_num()) + \
+          ".jeju.com/item/ajax/ajax.air_search_v3.php" \
           "?flight_index=1" \
           "&flight_scity=" + origin_place + \
           "&flight_ecity=" + destination_place + \
@@ -59,12 +60,9 @@ def get_ticket_information_single_date(origin_place, destination_place, departur
           "&agt=jeju" \
           "&time=1531298088800&_=1531298088202"
     response = requests.get(url)
-    # soup = BeautifulSoup(response.text, 'lxml')
-    # s = ast.literal_eval(soup.text)['data']
-    r=response.text.replace("(","").replace(")","")
-    s=json.loads(r)['data']
-    print(s)
-    print("---(url) %s seconds ---" % (time.time() - start_time))
+    r = response.text.replace("(", "").replace(")", "")
+    s = json.loads(r)['data']
+
     result = []
     for i in s:
         obj, created = TicketData.objects.update_or_create(
@@ -85,8 +83,7 @@ def get_ticket_information_single_date(origin_place, destination_place, departur
             leftseat=s[i]['no_of_avail_seat'],
         )
         result.append(obj)
-        # print(obj)
-    print("---(end) %s seconds ---" % (time.time() - start_time))
+    # print("---%s ( end) %s seconds ---" % flight_company,(time.time() - start_time))
     return result
 
 
