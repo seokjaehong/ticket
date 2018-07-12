@@ -37,7 +37,7 @@ class TicketData(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return '(%s) %s, %s : %s' % (self.pk,self.departure_date, self.departure_datetime, self.ticket_price)
+        return '(%s) %s, %s : %s' % (self.pk, self.departure_date, self.departure_datetime, self.ticket_price)
 
     class Meta:
-        ordering =('departure_date','departure_datetime',)
+        ordering = ('departure_date', 'departure_datetime',)

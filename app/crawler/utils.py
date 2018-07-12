@@ -1,4 +1,3 @@
-import ast
 import datetime
 import json
 from datetime import timedelta
@@ -6,7 +5,6 @@ import time
 import random
 
 import requests
-from bs4 import BeautifulSoup
 from selenium import webdriver
 from ticket.models.ticketdata import TicketData
 
@@ -48,7 +46,7 @@ def get_ticket_information_single_date(origin_place, destination_place, departur
           "?flight_index=1" \
           "&flight_scity=" + origin_place + \
           "&flight_ecity=" + destination_place + \
-          "&flight_date=" + departure_date[0:10]+ \
+          "&flight_date=" + departure_date[0:10] + \
           "&flight_com=" + str(flight_company) + \
           "&flight_class%5B%5D=n" \
           "&flight_class%5B%5D=d" \
@@ -84,7 +82,6 @@ def get_ticket_information_single_date(origin_place, destination_place, departur
                 leftseat=s[i]['no_of_avail_seat'],
             )
             result.append(obj)
-        # print("---%s ( end) %s seconds ---" % flight_company,(time.time() - start_time))
     return result
 
 
