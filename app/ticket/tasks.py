@@ -12,6 +12,8 @@ import time
 # TW: 티웨이항공
 __all__ = (
     'get_ticket_information_save_BX',
+    # 'get_ticket_information_save_KE_1',
+    # 'get_ticket_information_save_KE_2',
     'get_ticket_information_save_KE',
     'get_ticket_information_save_OZ',
     'get_ticket_information_save_LJ',
@@ -19,54 +21,75 @@ __all__ = (
     'get_ticket_information_save_TW',
     'get_ticket_information_save_7C',
 )
-departure_date = datetime.date.today()
-add_days = 10
-edate = departure_date + datetime.timedelta(days=add_days)
 
 
-def ticket_info_base(flight_company):
+def ticket_info_base(flight_company, single_date):
     start_time = time.time()
-
-    for single_date in daterange(departure_date, edate):
-        get_ticket_information_single_date(
-            origin_place='GMP',
-            destination_place='CJU',
-            departure_date=single_date,
-            flight_company=flight_company
-        )
-    print("---company code: {} , {}seconds ---".format(flight_company, (time.time() - start_time)))
+    get_ticket_information_single_date(
+        origin_place='GMP',
+        destination_place='CJU',
+        departure_date=single_date,
+        flight_company=flight_company
+    )
+    print("---company code: {},{} , {}seconds ---".format(flight_company, str(single_date), (time.time() - start_time)))
 
 
 @app.task()
-def get_ticket_information_save_BX():
-    ticket_info_base('BX')
+def get_ticket_information_save_BX(single_date):
+    ticket_info_base('BX', single_date)
 
 
 @app.task()
-def get_ticket_information_save_7C():
-    ticket_info_base('7C')
+def get_ticket_information_save_7C(single_date):
+    ticket_info_base('7C', single_date)
 
 
 @app.task()
-def get_ticket_information_save_KE():
-    ticket_info_base('KE')
+def get_ticket_information_save_OZ(single_date):
+    ticket_info_base('OZ', single_date)
 
 
 @app.task()
-def get_ticket_information_save_OZ():
-    ticket_info_base('OZ')
+def get_ticket_information_save_LJ(single_date):
+    ticket_info_base('LJ', single_date)
 
 
 @app.task()
-def get_ticket_information_save_LJ():
-    ticket_info_base('LJ')
+def get_ticket_information_save_ZE(single_date):
+    ticket_info_base('ZE', single_date)
 
 
 @app.task()
-def get_ticket_information_save_ZE():
-    ticket_info_base('ZE')
+def get_ticket_information_save_TW(single_date):
+    ticket_info_base('TW', single_date)
 
 
 @app.task()
-def get_ticket_information_save_TW():
-    ticket_info_base('TW')
+def get_ticket_information_save_KE(single_date):
+    ticket_info_base('KE', single_date)
+
+# @app.task()
+# def get_ticket_information_save_KE_1():
+#     start_time = time.time()
+#     half_day = departure_date + datetime.timedelta(days=add_days / 2)
+#     for single_date in daterange(departure_date, half_day):
+#         get_ticket_information_single_date(
+#             origin_place='GMP',
+#             destination_place='CJU',
+#             departure_date=single_date,
+#             flight_company='KE'
+#         )
+#     print("---company code: {} , {}seconds ---".format('KE', (time.time() - start_time)))
+#
+# @app.task()
+# def get_ticket_information_save_KE_2():
+#     start_time = time.time()
+#     half_day = departure_date + datetime.timedelta(days=add_days / 2)
+#     for single_date in daterange(half_day, edate):
+#         get_ticket_information_single_date(
+#             origin_place='GMP',
+#             destination_place='CJU',
+#             departure_date=single_date,
+#             flight_company='KE'
+#         )
+#     print("---company code: {} , {}seconds ---".format('KE', (time.time() - start_time)))

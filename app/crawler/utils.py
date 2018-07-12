@@ -43,15 +43,13 @@ def get_ticket_information_single_date(origin_place, destination_place, departur
     :param departure_date:
     :return:
     """
-
     url = "http://air" + str(generator_rand_num()) + \
           ".jeju.com/item/ajax/ajax.air_search_v3.php" \
           "?flight_index=1" \
           "&flight_scity=" + origin_place + \
           "&flight_ecity=" + destination_place + \
-          "&flight_date=" + str(departure_date) + \
+          "&flight_date=" + departure_date[0:10]+ \
           "&flight_com=" + str(flight_company) + \
-          "&flight_class%5B%5D=b" \
           "&flight_class%5B%5D=n" \
           "&flight_class%5B%5D=d" \
           "&flight_adult=1" \
@@ -59,31 +57,34 @@ def get_ticket_information_single_date(origin_place, destination_place, departur
           "&flight_baby=0" \
           "&agt=jeju" \
           "&time=1531298088800&_=1531298088202"
+    # print(url)
     response = requests.get(url)
-    r = response.text.replace("(", "").replace(")", "")
-    s = json.loads(r)['data']
 
     result = []
-    for i in s:
-        obj, created = TicketData.objects.update_or_create(
-            origin_place=s[i]["dep_desc"],
-            destination_place=s[i]['arr_desc'],
-            is_direct=False,
-            way_point='',
-            way_point_duration='',
-            ticket_price=int(s[i]['total']),
-            departure_date=parser_raw_value_to_datefield(s[i]['dep_date_time']),
-            departure_datetime=s[i]['dep_time'],
-            arrival_date=parser_raw_value_to_datefield(s[i]['arr_date_time']),
-            arrival_datetime=s[i]['arr_time'],
-            flight_time=s[i]['term'],
-            flight_company=s[i]['car_desc'],
-            currency='KRW',
-            data_source='jeju.com',
-            leftseat=s[i]['no_of_avail_seat'],
-        )
-        result.append(obj)
-    # print("---%s ( end) %s seconds ---" % flight_company,(time.time() - start_time))
+    if 'error' not in response.text:
+        r = response.text.replace("(", "").replace(")", "")
+        s = json.loads(r)['data']
+
+        for i in s:
+            obj, created = TicketData.objects.get_or_create(
+                origin_place=s[i]["dep_desc"],
+                destination_place=s[i]['arr_desc'],
+                is_direct=False,
+                way_point='',
+                way_point_duration='',
+                ticket_price=int(s[i]['total']),
+                departure_date=parser_raw_value_to_datefield(s[i]['dep_date_time']),
+                departure_datetime=s[i]['dep_time'],
+                arrival_date=parser_raw_value_to_datefield(s[i]['arr_date_time']),
+                arrival_datetime=s[i]['arr_time'],
+                flight_time=s[i]['term'],
+                flight_company=s[i]['car_desc'],
+                currency='KRW',
+                data_source='jeju.com',
+                leftseat=s[i]['no_of_avail_seat'],
+            )
+            result.append(obj)
+        # print("---%s ( end) %s seconds ---" % flight_company,(time.time() - start_time))
     return result
 
 
