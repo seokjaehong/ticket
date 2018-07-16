@@ -17,7 +17,7 @@ RUN         cp -f   /srv/ticket/.config/${BUILD_MODE}/nginx.conf       /etc/ngin
 #supervisord 설정 파일 복사
 RUN         cp -f   /srv/ticket/.config/${BUILD_MODE}/supervisord.conf /etc/supervisor/conf.d/
 RUN         mkdir /var/log/celery
-WORKDIR    /srv/project/app
+WORKDIR    /srv/ticket/app
 
 #supervisor를 실행
 CMD         pkill nginx; supervisord -n
