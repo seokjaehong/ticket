@@ -35,7 +35,6 @@ Django<2.1
 django-storages==1.6.5
 Pillow<6.0.0
 psycopg2-binary==2.7.4
-selenium==3.12.0
 
 ## 5. AWS environment
 - Python(3.6)
