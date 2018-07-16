@@ -27,3 +27,4 @@ class Command(BaseCommand):
             get_ticket_information_save.delay(single_date, 'ZE')
 
         print("---(celery_excute) %s seconds ---" % (time.time() - start_time))
+
