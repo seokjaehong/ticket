@@ -40,8 +40,10 @@ SECRETS_PRODUCTION = os.path.join(SECRETS_DIR, 'production.json')
 SECRETS = json.loads(open(SECRETS_BASE, 'rt').read())
 TEMPLATE_DIR = os.path.join(ROOT_DIR, 'templates')
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+# CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = 'redis://' + SECRETS['AWS_ELASTIC_CACHE']
+CELERY_RESULT_BACKEND = 'redis://' + SECRETS['AWS_ELASTIC_CACHE']
 
 AWS_ACCESS_KEY_ID = SECRETS['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = SECRETS['AWS_SECRET_ACCESS_KEY']
@@ -51,6 +53,8 @@ AWS_S3_REGION_NAME = 'ap-northeast-2'
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_S3_ENDPOINT_URL = 'http://s3.ap-northeast-2.amazonaws.com'
 # AWS_S3_FILE_OVERWRITE = False
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/

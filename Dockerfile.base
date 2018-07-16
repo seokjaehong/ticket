@@ -29,7 +29,7 @@ RUN         echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
 
 RUN         pyenv virtualenv 3.6.4 ticket
 COPY        . /srv/ticket
-COPY        .requirements /srv/.requirements
+COPY        .requirements /srv/ticket/.requirements
 
 WORKDIR /srv/ticket
 RUN     zsh
@@ -38,12 +38,9 @@ RUN     /root/.pyenv/versions/ticket/bin/pip install uwsgi
 RUN     apt-get install -y cron
 RUN     /root/.pyenv/versions/ticket/bin/pip install -r /srv/.requirements/production.txt
 
-#requirements만 복사
-COPY        .requirements /srv/.requirements
-
-WORKDIR     /srv
+WORKDIR     /srv/ticket
 RUN         pip install --upgrade pip
-RUN         pip install -r /srv/.requirements/production.txt
+RUN         pip install -r /srv/ticket/.requirements/production.txt
 
 
 ##chrome driver 세팅
