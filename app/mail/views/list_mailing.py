@@ -40,6 +40,7 @@ def list_mailing(request):
 
                 price_lists.append({
                     'mail_address': selected_ticket.receiver.mail_address,
+                    'flight_company':selected_ticket.ticket_data.flight_company,
                     'user_max_price': selected_ticket.receiver.user_max_price,
                     'origin_place': selected_ticket.receiver.origin_place,
                     'destination_place': selected_ticket.receiver.destination_place,

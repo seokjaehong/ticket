@@ -16,6 +16,7 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col">mail주소</th>
+                <th scope="col">항공사</th>
                 <th scope="col">출발날짜</th>
                 <th scope="col">출발시간</th>
                 <th scope="col">출발지</th>
@@ -28,6 +29,7 @@
             {% for price_list in price_lists %}
                 <tr>
                     <th>{{ price_list.mail_address }}</th>
+                    <th>{{ price_list.flight_company }}</th>
                     <th>{{ price_list.departure_date }}</th>
                     <th>{{ price_list.departure_datetime }}</th>
                     <th>{{ price_list.origin_place }}</th>
