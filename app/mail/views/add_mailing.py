@@ -12,9 +12,9 @@ __all__ = (
 def add_mailing(request):
     """
      Template: ticket/add.html
-        form (email, departure_date, price를 받아서 저장)
-    1. form에 주어진 조건으로 database에서 max_price보다 적은 가격의 검색 결과를 보여줌
-    2. 추가하고나면, 리스
+    1.    form (email, departure_date, price를 받아서 저장)
+    2. form에 주어진 조건 기준으로 으로 database에서 max_price보다 적은 가격의 Ticket을 중개모델에 저장
+
     :param request:
     :return:
     """

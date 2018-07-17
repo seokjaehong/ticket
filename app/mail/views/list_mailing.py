@@ -11,10 +11,15 @@ __all__ = (
 
 
 def list_mailing(request):
+    """
+    1. 조회조건 mail_address가 없으면 해당하는 selected_ticket을 보여준다(없으면 저장해서)
+    2. 크롤링 후 이 view를 실행해줘야 한다(selected_ticket을 선택하기 위해서...), 자동으로 생성할 수 있게, 크롤링 부분에도 추가하자
+    :param request:
+    :return:
+    """
     from_mail_address = 'devhsj@gmail.com'
     title = 'TicketList'
     price_lists = []
-    context = {}
 
     if request.method == "POST":
         to_mail_address = request.POST['mail_address']

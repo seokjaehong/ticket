@@ -2,7 +2,7 @@ from django.core.mail import EmailMessage
 from django.core.management import BaseCommand
 from django.template.loader import render_to_string
 
-from mail.models import Receiver, SelectedTicket
+from mail.models import SelectedTicket
 
 
 class Command(BaseCommand):

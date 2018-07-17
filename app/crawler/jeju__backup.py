@@ -1,3 +1,4 @@
+# 코드 재작성. crawler>management>commands> job_jeju.py
 # from datetime import timedelta
 #
 # from selenium import webdriver

@@ -4,14 +4,8 @@ from datetime import timedelta
 import random
 
 import requests
+
 from ticket.models.ticketdata import TicketData
-
-
-# class_grade(d) : 할인석
-# class_grade(n) : 일반석
-# class_grade(b) : 비즈니스석
-# 할인/일반석 만 포함
-
 
 def daterange(start_date, end_date):
     for n in range(int((end_date - start_date).days)):
@@ -32,7 +26,7 @@ def get_ticket_information_single_date(origin_place, destination_place, departur
     """
     class_grade(d) : 할인석
     class_grade(n) : 일반석
-    class_grade(b) : 비즈니스석
+    class_grade(b) : 비즈니스석 제외
 
     :param origin_place: GMP
     :param destination_place: CJU
@@ -85,7 +79,7 @@ def get_ticket_information_single_date(origin_place, destination_place, departur
 
     return result
 
-#
+# 셀레니움이용한 크롤링 코드 제외(속도이슈)
 # def get_ticket_information_single_date_selenium(origin_place, destination_place, departure_date):
 #     start_time = time.time()
 #     options = webdriver.ChromeOptions()
