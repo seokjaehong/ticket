@@ -46,7 +46,7 @@ def create_select_mail_list(to_mail_address=None):
     :param to_mail_address:
     :return:
     """
-    result=[]
+    result = []
     if to_mail_address:
         receiver_list = Receiver.objects.filter(mail_address=to_mail_address)
     else:
@@ -59,6 +59,8 @@ def create_select_mail_list(to_mail_address=None):
             ticket_price__lte=receiver.user_max_price,
             departure_date=receiver.departure_date
         )
+        # selected_ticket = [SelectedTicket(receiver=receiver, ticket_data=ticket) for ticket in ticket_list]
+        # result = SelectedTicket.objects.bulk_create(selected_ticket)
         for ticket in ticket_list:
             selected_ticket, created = SelectedTicket.objects.update_or_create(
                 receiver=receiver,

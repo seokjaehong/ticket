@@ -2,7 +2,7 @@ import time
 
 from django.core.management import BaseCommand
 
-from crawler.utils import daterange
+from crawler.utils import daterange, create_select_mail_list
 from ticket.tasks import get_ticket_information_save
 
 import datetime
