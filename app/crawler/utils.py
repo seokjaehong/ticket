@@ -5,9 +5,17 @@ import random
 
 import requests
 
+from mail.models import Receiver, SelectedTicket
 from ticket.models.ticketdata import TicketData
 
+
 def daterange(start_date, end_date):
+    """
+    datetime.date iterate하게 바꿔주는 함수
+    :param start_date: datetime.date
+    :param end_date: datetime.date
+    :return:
+    """
     for n in range(int((end_date - start_date).days)):
         yield start_date + timedelta(n)
 
@@ -19,7 +27,46 @@ def parser_raw_value_to_datefield(raw_value):
 
 
 def generator_rand_num():
+    """
+    크롤링 할 때 api주소에 있는 숫자 랜덤생성하기
+
+    http://air1.jeju.com/item/ajax/ajax.air_search_v3.php
+    http://air2.jeju.com/item/ajax/ajax.air_search_v3.php
+    ...
+    http://air9.jeju.com/item/ajax/ajax.air_search_v3.php
+
+    :return:
+    """
     return random.randrange(0, 10)
+
+
+def create_select_mail_list(to_mail_address=None):
+    """
+    M2M 중개모델 데이터 생성하는 함수
+    :param to_mail_address:
+    :return:
+    """
+    result=[]
+    if to_mail_address:
+        receiver_list = Receiver.objects.filter(mail_address=to_mail_address)
+    else:
+        receiver_list = Receiver.objects.all()
+
+    for receiver in receiver_list:
+        ticket_list = TicketData.objects.filter(
+            destination_place=receiver.destination_place,
+            origin_place=receiver.origin_place,
+            ticket_price__lte=receiver.user_max_price,
+            departure_date=receiver.departure_date
+        )
+        for ticket in ticket_list:
+            selected_ticket, created = SelectedTicket.objects.update_or_create(
+                receiver=receiver,
+                ticket_data=ticket
+            )
+            result.append(selected_ticket)
+            selected_ticket.save()
+    return result
 
 
 def get_ticket_information_single_date(origin_place, destination_place, departure_date, flight_company):
@@ -33,7 +80,6 @@ def get_ticket_information_single_date(origin_place, destination_place, departur
     :param departure_date:
     :return:
     """
-
     url = "http://air" + str(generator_rand_num()) + \
           ".jeju.com/item/ajax/ajax.air_search_v3.php" \
           "?flight_index=1" \
@@ -48,7 +94,6 @@ def get_ticket_information_single_date(origin_place, destination_place, departur
           "&flight_baby=0" \
           "&agt=jeju" \
           "&time=1531298088800&_=1531298088202"
-    # print(url)
     response = requests.get(url)
 
     result = []
@@ -76,7 +121,6 @@ def get_ticket_information_single_date(origin_place, destination_place, departur
             )
             obj.save()
             result.append(obj)
-
     return result
 
 # 셀레니움이용한 크롤링 코드 제외(속도이슈)

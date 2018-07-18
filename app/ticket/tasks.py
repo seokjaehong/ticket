@@ -1,7 +1,10 @@
 import datetime
-from crawler.utils import get_ticket_information_single_date, daterange
+from crawler.utils import get_ticket_information_single_date, daterange, create_select_mail_list
 from config.celery import app
 import time
+
+from mail.models import Receiver, SelectedTicket
+from ticket.models.ticketdata import TicketData
 
 # KE: 대한항공
 # OZ: 아시아나
@@ -24,4 +27,5 @@ def get_ticket_information_save(single_date, flight_company):
         departure_date=single_date,
         flight_company=flight_company
     )
+    create_select_mail_list()
     print("---company code: {},{} , {}seconds ---".format(flight_company, str(single_date), (time.time() - start_time)))

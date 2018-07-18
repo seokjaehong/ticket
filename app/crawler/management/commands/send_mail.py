@@ -11,11 +11,13 @@ class Command(BaseCommand):
         receiver_list = SelectedTicket.objects.all().distinct('receiver')
         for receiver in receiver_list:
 
-            mail_lists = SelectedTicket.objects.filter(receiver__mail_address=receiver.receiver.mail_address)
+            mail_lists = SelectedTicket.objects.filter(receiver__mail_address=receiver.receiver.mail_address).order_by(
+                'ticket_data__departure_date')
+
             price_lists = []
             for mail_list in mail_lists:
                 price_lists.append({
-                    'flight_company':mail_list.ticket_data.flight_company,
+                    'flight_company': mail_list.ticket_data.flight_company,
                     'user_max_price': mail_list.receiver.user_max_price,
                     'origin_place': mail_list.receiver.origin_place,
                     'destination_place': mail_list.receiver.destination_place,
@@ -34,4 +36,3 @@ class Command(BaseCommand):
                                from_email='hsj2334@gmail.com')
             msg.content_subtype = "html"
             msg.send()
-
