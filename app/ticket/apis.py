@@ -18,10 +18,10 @@ from ticket.serializer import ReceiverInformationSerializer
 class ReceiverInformationView(APIView):
     def get(self, request, format=None):
         try:
-            context = {'request': request}
+
             receivers = Receiver.objects.all()
 
-            serializer = ReceiverInformationSerializer(receivers, context=context, many=True)
+            serializer = ReceiverInformationSerializer(receivers, context={'receivers':receivers}, many=True)
         except ObjectDoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.data, status=status.HTTP_200_OK)
