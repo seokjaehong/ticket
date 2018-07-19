@@ -86,7 +86,7 @@ INSTALLED_APPS = [
     'members',
     'raven.contrib.django.raven_compat',
     'django_extensions',
-
+    'rest_framework',
     'storages',
     'ticket',
     'mail'

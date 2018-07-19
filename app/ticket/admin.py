@@ -4,4 +4,9 @@ from django.contrib import admin
 from .models.ticketdata import TicketData
 
 
-admin.site.register(TicketData)
+class TicketAdmin(admin.ModelAdmin):
+    list_filter = ('origin_place', 'destination_place', 'departure_datetime', 'arrival_datetime',)
+    search_fields = ('origin_place','destination_place', 'departure_datetime', 'arrival_datetime',)
+
+
+admin.site.register(TicketData, TicketAdmin)

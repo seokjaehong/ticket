@@ -22,7 +22,6 @@ class Receiver(models.Model):
     ticket_lists = models.ManyToManyField(
         TicketData,
         through='SelectedTicket',
-        # through_fields=('receiver, ticket_data'),
     )
 
     def __str__(self):
@@ -35,6 +34,16 @@ class Receiver(models.Model):
 
 
 class SelectedTicket(models.Model):
-    receiver = models.ForeignKey(Receiver, on_delete=models.CASCADE)
-    ticket_data = models.ForeignKey(TicketData, on_delete=models.CASCADE)
+    receiver = models.ForeignKey(
+        Receiver,
+        on_delete=models.CASCADE,
+        verbose_name='receiver',
+        related_name='ticket_datas'
+    )
+    ticket_data = models.ForeignKey(
+        TicketData,
+        on_delete=models.CASCADE,
+        verbose_name='ticket_data',
+        related_name='receivers'
+    )
     created_datetime = models.DateTimeField(auto_now_add=True)
