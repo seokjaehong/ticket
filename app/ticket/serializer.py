@@ -1,36 +1,17 @@
 from rest_framework import serializers
+from rest_framework.utils.field_mapping import get_nested_relation_kwargs
 
 from mail.models import SelectedTicket, Receiver
 from ticket.models.ticketdata import TicketData
 
 
 class TicketInformationSerializer(serializers.ModelSerializer):
-    dif_value = serializers.SerializerMethodField()
-
-    # def __init__(self, *args, **kwargs):
-    #     super(serializers.ModelSerializer, self).__init__(*args, **kwargs)
-    #     print("# -1")
-    #     print(args)
-    #     print(kwargs)
-    #     self.context["user_max_price"] = kwargs["context"]["user_max_price"]
-        # super(serializers.ModelSerializer, self).__init__(*args, **kwargs)
-    # def get_context(self):
-    #     print('1212111212121')
-    #     return self.context
-
-    def get_dif_value(self, obj):
-
-        receivers =self.context['receivers']
-        # print(recei)
-        # ticket = obj.receivers.first()
-        # print(ticket)
-        # receiver=receivers.filter(ticket_lists=obj)
-        # print(obj)
-        # return receiver.user_max_price - obj.ticket_price
-        return 0
+    max_price = serializers.SerializerMethodField()
+    receiver = serializers.SerializerMethodField()
 
     class Meta:
         model = TicketData
+
         fields = (
             'id',
             'ticket_price',
@@ -39,15 +20,19 @@ class TicketInformationSerializer(serializers.ModelSerializer):
             'origin_place',
             'destination_place',
             'ticket_price',
-            'dif_value',
+            'max_price',
+            'receiver'
         )
+
+    def get_max_price(self, obj):
+        return self.context["user_max_price"] - obj.ticket_price
+
+    def get_receiver(self, obj):
+        return obj.receivers.first().receiver.mail_address
 
 
 class ReceiverInformationSerializer(serializers.ModelSerializer):
-    def get_context(self):
-        return self.context
-    # user_max_price = serializers.SerializerMethodField()
-    ticket_lists = TicketInformationSerializer(context=get_context, many=True)
+    ticket_lists = serializers.SerializerMethodField()
 
     class Meta:
         model = Receiver
@@ -58,8 +43,19 @@ class ReceiverInformationSerializer(serializers.ModelSerializer):
             'ticket_lists',
         )
 
-    # def get_user_max_price(self, obj):
-    #     print("# 0")
-    #     print(obj)
-    #     obj.aaa = '123456'
-    #     return obj.user_max_price
+        # order_by = ['-created']
+
+    def get_ticket_lists(self, obj):
+
+        if self.context['a']:
+            print('높은 값순')
+            tickets = obj.ticket_lists.all().order_by('-ticket_price')
+        else:
+            print('낮은 값순')
+            tickets = obj.ticket_lists.all().order_by('ticket_price')
+        max_price = obj.user_max_price
+        serializer = TicketInformationSerializer(tickets, context={"user_max_price": max_price}, many=True)
+        return serializer.data
+
+    # def get_context(self):
+    #     return self.context
